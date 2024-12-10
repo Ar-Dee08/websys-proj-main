@@ -3,6 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
+-- Generation Time: Dec 10, 2024 at 12:55 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -42,7 +43,8 @@ INSERT INTO `user_login` (`id`, `username`, `email`, `password`) VALUES
 (2, 'Admin2', 'admin2@email.com', '$2y$10$GMbl8dGDpeFeT2zs8H9DT.CliznG11aUVZJhchpZ/4bmB7NAb11RS'),
 (3, 'Admin3', 'admin3@email.com', '$2y$10$UDbBEg.TYhE22geyqbcRsOu1g5jCnwDwy0jK5vIJDPnQ2E1gcRSAS'),
 (4, 'Admin4', 'admin4@email.com', '$2y$10$Jk4vtj0jMJYFyv8N3ySwEuKKtoGJZ3.n42sSUJbMIvPdmQcJ80D9K'),
-(5, 'Admin5', 'admin5@email.com', '$2y$10$DLt2m4zCSDOpIhROoiHTs.1Lk8jI6NrSzXqiwp.idZOYXNEsUqqIm');
+(5, 'Admin5', 'admin5@email.com', '$2y$10$DLt2m4zCSDOpIhROoiHTs.1Lk8jI6NrSzXqiwp.idZOYXNEsUqqIm'),
+(6, 'Admin6', 'admin6@email.com', '$2y$10$2hIlBkxplvlQXhM9eEJN6eet/yks7zylYeQCZ4p/7VUipsGglxXZC');
 
 --
 -- Indexes for dumped tables
@@ -63,7 +65,7 @@ ALTER TABLE `user_login`
 -- AUTO_INCREMENT for table `user_login`
 --
 ALTER TABLE `user_login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
