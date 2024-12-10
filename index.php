@@ -90,6 +90,7 @@
                 <h1>Welcome to Crumbs & Brew Cafe!</h1>
                 <p>Join us and make your coffee and pastry experience even better. Sign up now to start ordering your favorites online!</p>
                 <button id="signUp" type="button">Sign Up</button>
+                <p>GE</p>
             </div>
         </div>
     </div>
