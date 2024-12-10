@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="style-for-login.css">
+    <link rel="stylesheet" type="text/css" href="styles/login-s.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
     <title>Crumbs & Brew</title>
     <link rel="icon" href="images/img-003.ico" type="image/x-icon">
@@ -35,7 +35,7 @@
                     try {
                         $stmt->execute();
                         // Redirect with a success message
-                        header("Location: http://localhost/websys-proj/index.php?message=success");
+                        header("Location: http://localhost/websys-proj-main/index.php?message=success");
                         exit();
                     } catch (mysqli_sql_exception $e) {
                         // Check if the error is for duplicate entry
