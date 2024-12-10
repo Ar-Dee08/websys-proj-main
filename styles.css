@@ -10,7 +10,7 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    background: #f3e3d3;
+    background: #E4E0E1;
     font-family: 'monserrat', sans-serif;
     min-height: 100%;
     margin: 10%;
@@ -21,7 +21,7 @@ body {
     width: 768px;
     max-width: 100%;
     min-height: 480px;
-    background: #f3e3d3;
+    background: #E4E0E1;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), rgba (0,0,0,0.22);
@@ -47,7 +47,7 @@ body {
 }
 
 form {
-    background: #f3e3d3;
+    background: #D6C0B3;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -71,7 +71,7 @@ p {
 }
 
 input {
-    background: #7a6351;
+    background: #E4E0E1;
     padding: 12px 15px;
     margin: 8px 15px;
     width: 100%;
@@ -88,7 +88,7 @@ a {
 }
 
 button {
-    color: #f3e3d3;
+    color: #E4E0E1;
     background: #9b6b43;
     font-size: 12px;
     font-weight: bold;
@@ -109,7 +109,7 @@ button:active {
 
 #signIn, #signUp {
     background-color: transparent;
-    border: 2px solid #f3e3d3;
+    border: 2px solid #E4E0E1;
 }
 
 .container.right-panel-active .sign-in {
