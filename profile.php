@@ -34,4 +34,5 @@ $username = $_SESSION['username'];
         <!-- Add profile update form if needed -->
     </div>
 </body>
+<?php include 'includes/footer.php'; ?>
 </html>

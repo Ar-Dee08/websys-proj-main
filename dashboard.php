@@ -33,4 +33,5 @@ $username = $_SESSION['username'];
         <p>This is your home page where you can navigate through the system.</p>
     </div>
 </body>
+<?php include 'includes/footer.php'; ?>
 </html>
