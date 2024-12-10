@@ -6,7 +6,7 @@
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet"> 
-<link href="style.css" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 
 <footer>
     <div>

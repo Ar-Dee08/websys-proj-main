@@ -7,45 +7,22 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" />
-    <style>
-       * {
-            font-family: 'Play', sans-serif;
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="styles.css">
 
-        }
-        .navbar-brand {
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .navbar-nav .nav-link {
-            color: #337ab7; /* Custom link color */
-        }
-        .navbar-nav .nav-link:hover {
-            color: #23527c; /* Hover effect */
-        }
-        .logout-btn .nav-link {
-            color: #A59D84; /* Red color for the Sign Out link */
-            font-weight: bold;
-        }
-        .logout-btn .nav-link:hover {
-            color: bisque; /* Hover effect */
-        }
-        .logout-btn .nav-link i {
-            margin-right: 5px; /* Add space between icon and text */
-        }
-    </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm custom-navbar" id="mainNavbar">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Crumbs & Brew</a>
+            <a class="navbar-brand" href="dashboard.php">Crumbs & Brew</a>
             <button class="btn btn-primary me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                 Menu
             </button>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="dashboard.php">Home</a>

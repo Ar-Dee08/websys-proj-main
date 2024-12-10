@@ -19,6 +19,9 @@ $username = $_SESSION['username'];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Dashboard - Crumbs & Brew</title>
     <link rel="icon" href="images/img-003.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet"> 
+
 </head>
 <body>
     <?php include 'includes/header.php'; ?>
