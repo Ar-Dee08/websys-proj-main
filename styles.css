@@ -2,6 +2,7 @@
 
 * {
     box-sizing: border-box;
+    font-family: 'Play', sans-serif;
 }
 
 body {
@@ -20,7 +21,7 @@ body {
     width: 768px;
     max-width: 100%;
     min-height: 480px;
-    background: #fff;
+    background: #f3e3d3;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), rgba (0,0,0,0.22);
@@ -46,7 +47,7 @@ body {
 }
 
 form {
-    background: #fff;
+    background: #f3e3d3;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -87,7 +88,7 @@ a {
 }
 
 button {
-    color: #fff;
+    color: #f3e3d3;
     background: #9b6b43;
     font-size: 12px;
     font-weight: bold;
@@ -108,7 +109,7 @@ button:active {
 
 #signIn, #signUp {
     background-color: transparent;
-    border: 2px solid #fff;
+    border: 2px solid #f3e3d3;
 }
 
 .container.right-panel-active .sign-in {
@@ -138,7 +139,7 @@ button:active {
 
 .overlay {
     position: relative;
-    color: #fff;
+    color: #f3e3d3;
     background: #f3e3d3;
     left: -100%;
     height: 100%;
@@ -216,3 +217,4 @@ button:active {
 .container.right-panel-active .overlay-right {
     transform: translateX(0%);
 }
+

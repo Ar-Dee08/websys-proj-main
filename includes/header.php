@@ -8,6 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" />
     <style>
+       * {
+            font-family: 'Play', sans-serif;
+
+        }
         .navbar-brand {
             font-size: 18px;
             font-weight: bold;
@@ -19,11 +23,11 @@
             color: #23527c; /* Hover effect */
         }
         .logout-btn .nav-link {
-            color: #d9534f; /* Red color for the Sign Out link */
+            color: #A59D84; /* Red color for the Sign Out link */
             font-weight: bold;
         }
         .logout-btn .nav-link:hover {
-            color: #c9302c; /* Darker red on hover */
+            color: bisque; /* Hover effect */
         }
         .logout-btn .nav-link i {
             margin-right: 5px; /* Add space between icon and text */

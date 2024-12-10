@@ -26,5 +26,5 @@ if (!isset($_SESSION['user_id'])) {
         <!-- Add your customer management code here -->
     </div>
 </body>
+<?php include 'includes/footer.php'; ?>
 </html>
-s
