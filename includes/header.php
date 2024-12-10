@@ -13,17 +13,17 @@
             font-weight: bold;
         }
         .navbar-nav .nav-link {
-            color: #337ab7 !important; /* Custom link color */
+            color: #337ab7; /* Custom link color */
         }
         .navbar-nav .nav-link:hover {
-            color: #23527c !important; /* Hover effect */
+            color: #23527c; /* Hover effect */
         }
         .logout-btn .nav-link {
-            color: #d9534f !important; /* Red color for the Sign Out link */
+            color: #d9534f; /* Red color for the Sign Out link */
             font-weight: bold;
         }
         .logout-btn .nav-link:hover {
-            color: #c9302c !important; /* Darker red on hover */
+            color: #c9302c; /* Darker red on hover */
         }
         .logout-btn .nav-link i {
             margin-right: 5px; /* Add space between icon and text */
