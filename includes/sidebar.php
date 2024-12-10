@@ -1,4 +1,4 @@
-<div class="sidebar">
+<!-- <div class="sidebar">
     <a href="dashboard.php">Home</a>
     <a href="products.php">Products</a>
     <a href="customer.php">Customer</a>
@@ -33,4 +33,4 @@
 .sidebar a:last-child {
   border-bottom: none;
 }
-</style>
+</style> -->
