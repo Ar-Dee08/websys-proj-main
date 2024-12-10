@@ -28,4 +28,5 @@ if (!isset($_SESSION['user_id'])) {
         <p>Here you can manage your products.</p>
     </div>
 </body>
+<?php include 'includes/footer.php'; ?>
 </html>

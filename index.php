@@ -35,7 +35,7 @@
                     try {
                         $stmt->execute();
                         // Redirect with a success message
-                        header("Location: http://localhost/websys-proj/index.php?message=success");
+                        header("Location: http://localhost/websys-proj-main/index.php?message=success");
                         exit();
                     } catch (mysqli_sql_exception $e) {
                         // Check if the error is for duplicate entry
@@ -125,4 +125,5 @@
     });
 </script>
 </body>
+<?php include 'includes/footer.php'; ?>
 </html>
