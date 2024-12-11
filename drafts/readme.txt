@@ -33,8 +33,6 @@ to do:
 - can be able to edit or delete
 // customer
 - *is this necessary?*
-// profile
-- fix the edit profile feature
 
 // frontend part
 - add styling (external, internal, inline css)
