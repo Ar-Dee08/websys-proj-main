@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $birthdate = $_POST['birthdate'];
     $sex = $_POST['sex'];
 
+
     // Update the user login details (username, email)
     $sql = "UPDATE user_login SET username = ?, email = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
@@ -91,4 +92,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </form>
 </body>
 <?php include 'includes/footer.php'; ?>
+
 </html>
