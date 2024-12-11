@@ -18,16 +18,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $birthdate = $_POST['birthdate'];
     $sex = $_POST['sex'];
 
-    // Update the user profile
-    $sql = "UPDATE user_profile SET sex = ?, birthdate = ? WHERE user_id = ?";
+
+    // Update the user login details (username, email)
+    $sql = "UPDATE user_login SET username = ?, email = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssi", $sex, $birthdate, $user_id);
+    $stmt->bind_param("ssi", $username, $email, $user_id);
 
     if ($stmt->execute()) {
-        header("Location: view_profile.php");
-        exit();
+        // Now update the user profile details (sex, birthdate)
+        $sql = "UPDATE user_profile SET sex = ?, birthdate = ? WHERE user_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssi", $sex, $birthdate, $user_id);
+
+        if ($stmt->execute()) {
+            header("Location: view_profile.php");
+            exit();
+        } else {
+            echo "Error updating profile in user_profile: " . $conn->error;
+        }
     } else {
-        echo "Error updating profile: " . $conn->error;
+        echo "Error updating profile in user_login: " . $conn->error;
     }
 
     $stmt->close();
@@ -63,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h1>Edit Profile</h1>
     <form method="POST" action="">
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($row['username']); ?>" required><br>
+        <input type="text" id="name" name="username" value="<?php echo htmlspecialchars($row['username']); ?>" required><br>
 
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" required><br>
@@ -82,4 +92,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </form>
 </body>
 <?php include 'includes/footer.php'; ?>
+
 </html>
