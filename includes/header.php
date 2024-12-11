@@ -34,7 +34,7 @@
                         <a class="nav-link" href="customer.php">Customer</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="profile.php">Profile</a>
+                        <a class="nav-link" href="view_profile.php">Profile</a>
                     </li>
                 </ul>
                 <div class="logout-btn">
