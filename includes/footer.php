@@ -41,15 +41,17 @@
 </footer>
 <style>
   .footer {
-    height: 100%;
-    max-height: auto;
+    max-height: 50%;
+    width: 100%;
     background: #4a4a4a;
     color: #e0e0e0;
     padding: 30px 0;
     font-family: 'Play', sans-serif;
     text-align: center;
-    margin: 20px 0;
+    margin: 20px 0px 0px 0px;
     overflow-x: hidden;
+    position: absolute;
+    font-family: 'Inter', sans-serif;
 }
 
 .icons-row {
