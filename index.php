@@ -11,10 +11,9 @@
 <body>
 <div class="container" id="main">
     <div class="sign-up">
-        <form action="index.php" method="POST">
+        <form action="index.php" method="POST" id="signUpForm">
             <h1>Create Account</h1>
             <?php
-            // Enable error reporting for debugging
             error_reporting(E_ALL);
             ini_set('display_errors', 1);
 
@@ -34,28 +33,26 @@
 
                     try {
                         $stmt->execute();
-                        // Redirect with a success message
-                        header("Location: http://localhost/websys-proj-main/index.php?message=success");
+                        header("Location: index.php?message=success");
                         exit();
                     } catch (mysqli_sql_exception $e) {
-                        // Check if the error is for duplicate entry
-                        if ($e->getCode() == 1062) { // 1062 is the error code for duplicate entries
-                            $errorMessage = '<div class="error-message">The email is already taken. Please try again.</div>';
+                        if ($e->getCode() == 1062) {
+                            $errorMessage = 'The email is already taken. Please try again.';
                         } else {
-                            $errorMessage = '<div class="error-message">An unexpected error occurred. Please try again.</div>';
+                            $errorMessage = 'An unexpected error occurred. Please try again.';
                         }
                     }
 
                     $stmt->close();
                 } else {
-                    $errorMessage = '<div class="error-message">Please fill in all fields.</div>';
+                    $errorMessage = 'Please fill in all fields.';
                 }
 
                 $conn->close();
             }
-            // Display the error message if it exists
             if (!empty($errorMessage)) {
-                echo $errorMessage;
+                echo "<div class='error-message'>$errorMessage</div>";
+                echo "<script>document.getElementById('main').classList.add('right-panel-active');</script>";
             }
             ?>
             <input type="text" name="username" placeholder="Name" required>
@@ -68,7 +65,6 @@
         <form action="login.php" method="POST">
             <h1>Sign In</h1>
             <?php
-            // Check for a success message in the URL
             if (isset($_GET['message']) && $_GET['message'] == 'success') {
                 echo '<div class="success-message">Account Successfully Created!</div>';
             }
@@ -90,7 +86,6 @@
                 <h1>Welcome to Crumbs & Brew Cafe!</h1>
                 <p>Join us and make your coffee and pastry experience even better. Sign up now to start ordering your favorites online!</p>
                 <button id="signUp" type="button">Sign Up</button>
-                <p>GE</p>
             </div>
         </div>
     </div>
