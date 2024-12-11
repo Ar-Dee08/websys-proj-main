@@ -24,8 +24,13 @@ if (!isset($_SESSION['user_id'])) {
     <?php include 'includes/sidebar.php'; ?>
 
     <div class="content" style="margin-left: 250px; margin-top: 60px; padding: 20px;">
-        <h1>Products Page</h1>
-        <p>Here you can manage your products.</p>
+    <h2>Product Page</h2>
+    <form action="edit_product.php" method="get">
+        <button type="submit">Add Products</button>
+    </form>
+    <form action="view_product.php" method="get">
+        <button type="submit">Product Gallery</button>
+    </form>
     </div>
 </body>
 <?php include 'includes/footer.php'; ?>
