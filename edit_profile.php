@@ -1,14 +1,17 @@
 <?php
-// edit_profile.php
-include 'db/db_connection.php';
-include 'includes/header.php';
-include 'includes/sidebar.php';
+ob_start(); // Start output buffering
+ini_set('display_errors', 1); 
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
+
+include 'db/db_connection.php';
+include 'includes/header.php';
 
 $user_id = $_SESSION['user_id'];
 
@@ -18,28 +21,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $birthdate = $_POST['birthdate'];
     $sex = $_POST['sex'];
 
-
-    // Update the user login details (username, email)
-    $sql = "UPDATE user_login SET username = ?, email = ? WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssi", $username, $email, $user_id);
-
-    if ($stmt->execute()) {
-        // Now update the user profile details (sex, birthdate)
-        $sql = "UPDATE user_profile SET sex = ?, birthdate = ? WHERE user_id = ?";
+    if (empty($username) || empty($email) || empty($birthdate) || empty($sex)) {
+        echo "All fields are required.";
+    } else {
+        // Update the user login details (username, email)
+        $sql = "UPDATE user_login SET username = ?, email = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssi", $sex, $birthdate, $user_id);
+        $stmt->bind_param("ssi", $username, $email, $user_id);
 
         if ($stmt->execute()) {
-            header("Location: view_profile.php");
-            exit();
-        } else {
-            echo "Error updating profile in user_profile: " . $conn->error;
-        }
-    } else {
-        echo "Error updating profile in user_login: " . $conn->error;
-    }
+            // Check if profile exists, then update or insert
+            $sql = "SELECT * FROM user_profile WHERE user_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
+            if ($result->num_rows > 0) {
+                // Update existing profile
+                $sql = "UPDATE user_profile SET sex = ?, birthdate = ? WHERE user_id = ?";
+                $stmt = $conn->prepare($sql);
+                // Bind parameters: $sex and $birthdate as strings (s), and $user_id as an integer (i)
+                $stmt->bind_param("ssi", $sex, $birthdate, $user_id);
+                $stmt->execute();
+            } else {
+                // Insert new profile record
+                $sql = "INSERT INTO user_profile (user_id, sex, birthdate) VALUES (?, ?, ?)";
+                $stmt = $conn->prepare($sql);
+                // Bind parameters: $user_id as an integer (i), and $sex, $birthdate as strings (s)
+                $stmt->bind_param("iss", $user_id, $sex, $birthdate);
+                $stmt->execute();
+            }
+            
+
+            $stmt->close();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ssi", $sex, $birthdate, $user_id);
+
+            if ($stmt->execute()) {
+                header("Location: view_profile.php");
+                exit();
+            } else {
+                echo "Error updating profile in user_profile: " . $conn->error;
+            }
+        } else {
+            echo "Error updating profile in user_login: " . $conn->error;
+        }
+    }
     $stmt->close();
 } else {
     // Retrieve current profile data
