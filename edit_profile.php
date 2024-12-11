@@ -1,6 +1,8 @@
 <?php
 // edit_profile.php
-include 'db_connection.php';
+include 'db/db_connection.php';
+include 'includes/header.php';
+include 'includes/sidebar.php';
 
 session_start();
 if (!isset($_SESSION['user_id'])) {
@@ -16,9 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $birthdate = $_POST['birthdate'];
     $sex = $_POST['sex'];
 
-    $sql = "UPDATE user_login SET username = ?, email = ?, birthdate = ?, sex = ? WHERE id = ?";
+    // Update the user profile
+    $sql = "UPDATE user_profile SET sex = ?, birthdate = ? WHERE user_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssi", $username, $email, $birthdate, $sex, $user_id);
+    $stmt->bind_param("ssi", $sex, $birthdate, $user_id);
 
     if ($stmt->execute()) {
         header("Location: view_profile.php");
@@ -29,7 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $stmt->close();
 } else {
-    $sql = "SELECT username, email, birthdate, sex FROM user_login WHERE id = ?";
+    // Retrieve current profile data
+    $sql = "SELECT u.username, u.email, p.birthdate, p.sex 
+            FROM user_login u
+            LEFT JOIN user_profile p ON u.id = p.user_id 
+            WHERE u.id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
@@ -74,4 +81,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <button type="submit">Save Changes</button>
     </form>
 </body>
+<?php include 'includes/footer.php'; ?>
 </html>
