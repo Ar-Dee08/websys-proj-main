@@ -7,8 +7,6 @@
 </head>
 <body>
 <?php include 'includes/header.php'; ?>
-<?php include 'includes/sidebar.php'; ?>
-
 
 <div class="content" style="margin-left: 250px; margin-top: 60px; padding: 20px;">
         <h1>Administrators Management</h1>

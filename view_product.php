@@ -1,7 +1,6 @@
 <?php
 // Include necessary files
 include 'includes/header.php';
-include 'includes/sidebar.php';
 include('db/db_connection.php');
 
 // Fetch all products from the database

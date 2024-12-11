@@ -1,29 +1,46 @@
 <?php
-// view_profile.php
-include 'db/db_connection.php';
-include 'includes/header.php';
-include 'includes/sidebar.php';
+ini_set('display_errors', 1); 
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 session_start();
+
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    echo "Session user_id not set.";
     exit();
 }
 
+include 'db/db_connection.php';
+include 'includes/header.php';
+
 $user_id = $_SESSION['user_id'];
+
 $sql = "SELECT u.username, u.email, p.birthdate, p.sex 
         FROM user_login u
         LEFT JOIN user_profile p ON u.id = p.user_id 
         WHERE u.id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
+error_log("Executing SQL: " . $sql);
 
+$stmt = $conn->prepare($sql);
+if (!$stmt) {
+    error_log("Error preparing statement: " . $conn->error);
+    echo "Error preparing statement.";
+    exit();
+}
+
+$stmt->bind_param("i", $user_id);
+
+if (!$stmt->execute()) {
+    error_log("Error executing query: " . $stmt->error);
+    echo "Error executing query.";
+    exit();
+}
+
+$result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
 } else {
-    echo "User not found.";
+    echo "No data found for the user ID $user_id";
     exit();
 }
 $stmt->close();
@@ -45,4 +62,5 @@ $stmt->close();
     <button onclick="location.href='edit_profile.php'">Edit Profile</button>
 </body>
 <?php include 'includes/footer.php'; ?>
+
 </html>
