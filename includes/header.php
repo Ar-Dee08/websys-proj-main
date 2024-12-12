@@ -1,20 +1,18 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crumbs & Brew</title>
-    <!-- Bootstrap CSS -->
+    <!-- Offcanvas Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet"> 
+
     <link rel="stylesheet" href="styles.css">
 
 </head>
 <body>
-    <!-- Navbar -->
+    <!-- NavBar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm custom-navbar" id="mainNavbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="dashboard.php">Crumbs & Brew</a>
@@ -85,10 +83,12 @@
             </ul>
         </div>
     </div>
+
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
 <!-- Additional JavaScript for Offcanvas functionality -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {

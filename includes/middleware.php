@@ -11,3 +11,5 @@ if (isset($_SESSION['username'])) { //CHECK IF USER IS ADMIN, will be updated
     header("Location: index.php?error=Login to continue.");
 
 }
+
+?>
