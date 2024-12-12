@@ -1,5 +1,9 @@
 <?php
 // Include necessary files
+ob_start(); // Start output buffering
+ini_set('display_errors', 1); 
+ini_set('display_startup_errors', 1);
+
 include 'includes/header.php';
 include('db/db_connection.php');
 
@@ -34,7 +38,7 @@ if (!$result) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Profile - Products</title>
+    <title>View Products</title>
 </head>
 <body>
     <h2>Products List</h2>
@@ -53,6 +57,7 @@ if (!$result) {
                     <h3><?php echo $product['product_name']; ?></h3>
                     <p><?php echo $product['product_description']; ?></p>
                     <p><strong>Price:</strong> ₱<?php echo number_format($product['product_price'], 2); ?></p>
+                    <a href="edit_product.php?id=<?php echo $product['id']; ?>">Edit</a> <!-- Corrected to use product_id -->
                 </li>
             <?php endwhile; ?>
         </ul>
