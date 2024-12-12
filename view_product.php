@@ -3,8 +3,24 @@
 include 'includes/header.php';
 include('db/db_connection.php');
 
+// Fetch all categories from the database
+$category_query = "SELECT * FROM categories";
+$category_result = mysqli_query($conn, $category_query);
+
+// Check if query is successful
+if (!$category_result) {
+    echo "Error: " . mysqli_error($conn);
+}
+
+// Check if a category is selected
+if (isset($_GET['category']) && $_GET['category'] != '') {
+    $category_id = $_GET['category'];
+    $query = "SELECT * FROM products WHERE category_id = '$category_id'";
+} else {
+    $query = "SELECT * FROM products";
+}
+
 // Fetch all products from the database
-$query = "SELECT * FROM products";
 $result = mysqli_query($conn, $query);
 
 // Check if query is successful
@@ -22,6 +38,13 @@ if (!$result) {
 </head>
 <body>
     <h2>Products List</h2>
+    
+    <select id="category-dropdown" name="category" onchange="window.location.href='view_product.php?category='+this.value">
+        <option value="">All Categories</option>
+        <?php while ($category = mysqli_fetch_assoc($category_result)) : ?>
+            <option value="<?php echo $category['category_id']; ?>" <?php if (isset($_GET['category']) && $_GET['category'] == $category['category_id']) echo 'selected'; ?>><?php echo $category['category_name']; ?></option>
+        <?php endwhile; ?>
+    </select>
     
     <?php if (mysqli_num_rows($result) > 0) : ?>
         <ul>

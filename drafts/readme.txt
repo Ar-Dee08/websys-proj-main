@@ -36,3 +36,8 @@ to do:
 
 // frontend part
 - add styling (external, internal, inline css)
+
+add this to identify the error:
+ob_start(); // Start output buffering
+ini_set('display_errors', 1); 
+ini_set('display_startup_errors', 1);
