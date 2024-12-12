@@ -19,6 +19,8 @@ git commands:
 "git push origin main" push the resolved origin main
 "git pull origin main" synch your main with the remote repo
 
+IMPORTANT NOTE ADD THE UPDATED DB
+
 to do:
 // dashboard
 - show the count and total amount of the orders depends on the successful checkouts
