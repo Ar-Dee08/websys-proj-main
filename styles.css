@@ -3,18 +3,24 @@
     font-family: 'Play', sans-serif;
     margin: 0;
     padding: 0;
+    font-weight: bold; /* Added to make all text bold */
 }
 body {
     background-image: url('images/image-004.png');
     background-size: 100px;
-    background: linear-gradient(#ab886de2, #8b4e5db3), url('images/image-004.png');
+    background: linear-gradient(#ab886de2, #d6c0b3b3), url('images/image-004.png');
     background-attachment: fixed;
-    
+    font-weight: bold; /* Added to make body text bold */
 }
 /* Navbar Styles */
 .custom-navbar {
-    background-color: #ffffff;
-    border-bottom: 1px solid #e0e0e0;
+    background-color: #E4E0E1; 
+    border-bottom: 1px solid #1a111139;
+    font-weight: bold; 
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
 .navbar-brand {
@@ -24,28 +30,30 @@ body {
 }
 
 .navbar-nav .nav-link {
-    color: #AB886D;
+    color: #493628; /* New color added */
     font-size: 1rem;
     padding: 0.5rem 1rem;
+    font-weight: bold; /* Added to make navbar link text bold */
 }
 
 .navbar-nav .nav-link:hover {
-    color: #007bff;
+    color: #D6C0B3;
 }
 
 .logout-btn .nav-link {
-    color: #dc3545;
+    color: #493628; /* New color added */
     font-weight: bold;
 }
 
 .logout-btn .nav-link:hover {
-    color: #c82333;
+    color: #D6C0B3;
 }
 
 /* Offcanvas Styles */
 .offcanvas-header {
-    background-color: #f8f9fa;
+    background-color: #D6C0B3;
     border-bottom: 1px solid #e0e0e0;
+    font-weight: bold; /* Added to make offcanvas header text bold */
 }
 
 .offcanvas-title {
@@ -55,25 +63,50 @@ body {
 
 .offcanvas-body {
     padding: 1rem;
+    font-weight: bold; /* Added to make offcanvas body text bold */
 }
 
 .offcanvas-body .nav-link {
-    color: #555555;
+    color: #493628; /* New color added */
     font-size: 1rem;
     padding: 0.5rem 1rem;
+    font-weight: bold; /* Added to make offcanvas link text bold */
 }
 
 .offcanvas-body .nav-link:hover {
-    color: #007bff;
+    color: #D6C0B3;
 }
 
 /* Button Styles */
 .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #493628; /* New color added */
+    border-color: #493628; /* New color added */
+    font-weight: bold; /* Added to make button text bold */
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
+    background-color: #D6C0B3;
+    border-color: #D6C0B3;
 }
+
+/* Footer Styles */
+/* Ensures the body takes full height */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/* Make sure the body and html take the full height */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/* Flexbox for the container to ensure footer stays at the bottom */
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures the container takes the full height of the screen */
+}
+
+
