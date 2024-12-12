@@ -41,20 +41,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Update existing profile
                 $sql = "UPDATE user_profile SET sex = ?, birthdate = ? WHERE user_id = ?";
                 $stmt = $conn->prepare($sql);
-                // Bind parameters: $sex and $birthdate as strings (s), and $user_id as an integer (i)
                 $stmt->bind_param("ssi", $sex, $birthdate, $user_id);
-                $stmt->execute();
             } else {
                 // Insert new profile record
                 $sql = "INSERT INTO user_profile (user_id, sex, birthdate) VALUES (?, ?, ?)";
                 $stmt = $conn->prepare($sql);
-                // Bind parameters: $user_id as an integer (i), and $sex, $birthdate as strings (s)
                 $stmt->bind_param("iss", $user_id, $sex, $birthdate);
-                $stmt->execute();
             }
             
-
+            // Execute the prepared statement
+            if ($stmt->execute()) {
+                header("Location: view_profile.php");
+                exit();
+            } else {
+                echo "Error updating or inserting profile: " . $conn->error;
+            }
             $stmt->close();
+            
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ssi", $sex, $birthdate, $user_id);
 
