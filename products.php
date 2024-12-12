@@ -25,6 +25,9 @@ if (!isset($_SESSION['user_id'])) {
 
     <div class="content" style="margin-left: 250px; margin-top: 60px; padding: 20px;">
     <h2>Product Page</h2>
+    <form action="view_category.php" method="get">
+        <button type="submit">Category</button>
+    </form>
     <form action="edit_product.php" method="get">
         <button type="submit">Add Products</button>
     </form>

@@ -3,15 +3,25 @@
 include 'includes/header.php';
 include('db/db_connection.php');
 
+// Fetch all categories from the database
+$category_query = "SELECT * FROM categories";
+$category_result = mysqli_query($conn, $category_query);
+
+// Check if query is successful
+if (!$category_result) {
+    echo "Error: " . mysqli_error($conn);
+}
+
 // Check if the form is submitted
 if (isset($_POST['submit'])) {
     $product_name = $_POST['product_name'];
     $product_description = $_POST['product_description'];
     $product_price = $_POST['product_price'];
+    $category_id = $_POST['category_id'];
 
     // Prepare statement to insert product into database
-    $stmt = $conn->prepare("INSERT INTO products (product_name, product_description, product_price) VALUES (?, ?, ?)");
-    $stmt->bind_param("ssd", $product_name, $product_description, $product_price); // "ssd" means string, string, decimal
+    $stmt = $conn->prepare("INSERT INTO products (product_name, product_description, product_price, category_id) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssdi", $product_name, $product_description, $product_price, $category_id); // "ssdi" means string, string, decimal, integer
 
     // Execute the query
     if ($stmt->execute()) {
@@ -45,6 +55,14 @@ if (isset($_POST['submit'])) {
 
         <label for="product_price">Product Price:</label><br>
         <input type="number" name="product_price" id="product_price" required><br><br>
+
+        <label for="category_id">Category:</label><br>
+        <select name="category_id" id="category_id" required>
+            <option value="">Select a category</option>
+            <?php while ($category = mysqli_fetch_assoc($category_result)) : ?>
+                <option value="<?php echo $category['category_id']; ?>"><?php echo $category['category_name']; ?></option>
+            <?php endwhile; ?>
+        </select><br><br>
 
         <input type="submit" name="submit" value="Add Product">
     </form>
