@@ -12,7 +12,7 @@
 </head>
 <body>
     <!-- NavBar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm custom-navbar" id="mainNavbar">
+    <nav class="navbar navbar-expand-lg navbar-light border-bottom shadow-sm custom-navbar" id="mainNavbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="dashboard.php">Crumbs & Brew</a>
             <button class="btn btn-primary me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
@@ -64,9 +64,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admins.php">Administrator</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="customer.php">Customer</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="profile.php">Profile</a>

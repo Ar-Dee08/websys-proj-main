@@ -21,7 +21,6 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 <body>
     <?php include 'includes/header.php'; ?>
-    <?php include 'includes/sidebar.php'; ?>
 
     <div class="content" style="margin-left: 250px; margin-top: 60px; padding: 20px;">
     <h2>Product Page</h2>
