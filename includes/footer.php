@@ -24,14 +24,24 @@
 
     <!-- Links Row -->
     <div class="row">
-      <ul style="list-style: none; padding: 0;">
+      <ul style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 5.0px;">
 
-        <!-- To change, synch with the contents. -->
-        <li style="display: inline; margin-right: 10px;"><a href="#">Contact us</a></li>
-        <li style="display: inline; margin-right: 10px;"><a href="#">Our Services</a></li>
-        <li style="display: inline; margin-right: 10px;"><a href="#">Privacy Policy</a></li>
-        <li style="display: inline; margin-right: 10px;"><a href="#">Terms & Conditions</a></li>
-        <li style="display: inline; margin-right: 10px;"><a href="#">Career</a></li>
+      <!-- To change, synch with the contents. -->
+      <li class="nav-item">
+        <a class="nav-link" href="dashboard.php">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="products.php">Products</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="cart.php">Cart</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="admins.php">Administrator</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="view_profile.php">Profile</a>
+      </li>
       </ul>
     </div>
 

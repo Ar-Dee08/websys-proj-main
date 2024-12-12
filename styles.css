@@ -4,7 +4,13 @@
     margin: 0;
     padding: 0;
 }
-
+body {
+    background-image: url('images/image-004.png');
+    background-size: 100px;
+    background: linear-gradient(#ab886de2, #8b4e5db3), url('images/image-004.png');
+    background-attachment: fixed;
+    
+}
 /* Navbar Styles */
 .custom-navbar {
     background-color: #ffffff;
