@@ -4,57 +4,70 @@ session_start();
 ob_start(); // Start output buffering
 ini_set('display_errors', 1); 
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
-require_once 'includes/header.php';
-require_once 'db/db_connection.php';
+include 'includes/header.php';
+include('db/db_connection.php');
 
-// Handle adding multiple products to cart
-if (isset($_POST['add_multiple_to_cart']) && isset($_POST['id']) && is_array($_POST['id'])) {
-    foreach ($_POST['id'] as $id) {
-        $id = mysqli_real_escape_string($conn, $id);
-        $quantity = isset($_POST['quantities'][$id]) ? (int)$_POST['quantities'][$id] : 1;
+// Handle adding products to cart
+if (isset($_POST['add_to_cart'])) {
+    $product_id = $_POST['product_id'];
+    $quantity = $_POST['quantity'];
 
-        // Fetch product details securely
-        $product_query = "SELECT * FROM products WHERE id = ?";
-        $stmt = $conn->prepare($product_query);
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $product_result = $stmt->get_result();
-        $product = $product_result->fetch_assoc();
+    // Fetch product details
+    $product_query = "SELECT * FROM products WHERE id = '$product_id'";
+    $product_result = mysqli_query($conn, $product_query);
+    $product = mysqli_fetch_assoc($product_result);
 
-        if ($product) {
-            $cart_item = [
-                'id' => $product['id'],
-                'name' => $product['product_name'],
-                'price' => $product['product_price'],
-                'quantity' => $quantity,
-            ];
+    if ($product) {
+        $cart_item = [
+            'id' => $product['id'],
+            'name' => $product['product_name'],
+            'price' => $product['product_price'],
+            'quantity' => $quantity,
+        ];
 
-            // Add to session cart
-            if (!isset($_SESSION['cart'])) {
-                $_SESSION['cart'] = [];
-            }
+        // Add to session cart
+        if (!isset($_SESSION['cart'])) {
+            $_SESSION['cart'] = [];
+        }
 
-            $found = false;
-            foreach ($_SESSION['cart'] as &$item) {
-                if ($item['id'] == $id) {
-                    $item['quantity'] += $quantity;
-                    $found = true;
-                    break;
-                }
-            }
-
-            if (!$found) {
-                $_SESSION['cart'][] = $cart_item;
+        $found = false;
+        foreach ($_SESSION['cart'] as &$item) {
+            if ($item['id'] == $product_id) {
+                $item['quantity'] += $quantity;
+                $found = true;
+                break;
             }
         }
+
+        if (!$found) {
+            $_SESSION['cart'][] = $cart_item;
+        }
     }
-    header("Location: cart.php");
-    exit();
+}
+
+// Handle updating quantities
+if (isset($_POST['update_cart'])) {
+    foreach ($_POST['quantities'] as $key => $quantity) {
+        if (isset($_SESSION['cart'][$key])) {
+            $_SESSION['cart'][$key]['quantity'] = $quantity;
+        }
+    }
+}
+
+// Handle removing items
+if (isset($_POST['remove_items'])) {
+    foreach ($_POST['remove'] as $key) {
+        unset($_SESSION['cart'][$key]);
+    }
+}
+
+// Handle checkout (example placeholder)
+if (isset($_POST['checkout'])) {
+    echo "<script>alert('Checkout completed!')</script>";
+    unset($_SESSION['cart']);
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,11 +93,11 @@ if (isset($_POST['add_multiple_to_cart']) && isset($_POST['id']) && is_array($_P
                 <tbody>
                     <?php foreach ($_SESSION['cart'] as $key => $item): ?>
                         <tr>
-                            <td><input type="checkbox" name="remove[]" value="<?php echo $item['id']; ?>"></td>
-                            <td><?php echo htmlspecialchars($item['name']); ?></td>
+                            <td><input type="checkbox" name="remove[]" value="<?php echo $key; ?>"></td>
+                            <td><?php echo $item['name']; ?></td>
                             <td>₱<?php echo number_format($item['price'], 2); ?></td>
                             <td>
-                                <input type="number" name="quantities[<?php echo $item['id']; ?>]" value="<?php echo $item['quantity']; ?>" min="1">
+                                <input type="number" name="quantities[<?php echo $key; ?>]" value="<?php echo $item['quantity']; ?>" min="1">
                             </td>
                             <td>₱<?php echo number_format($item['price'] * $item['quantity'], 2); ?></td>
                         </tr>
@@ -100,5 +113,5 @@ if (isset($_POST['add_multiple_to_cart']) && isset($_POST['id']) && is_array($_P
         <?php endif; ?>
     </form>
 </body>
-<?php require_once 'includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>
 </html>

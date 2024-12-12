@@ -4,28 +4,33 @@ session_start();
 ob_start(); // Start output buffering
 ini_set('display_errors', 1); 
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
-require_once 'includes/header.php';
-require_once 'db/db_connection.php';
+include 'includes/header.php';
+include('db/db_connection.php');
 
-// Fetch all categories
+// Fetch all categories from the database
 $category_query = "SELECT * FROM categories";
 $category_result = mysqli_query($conn, $category_query);
+
+// Check if query is successful
 if (!$category_result) {
-    die("Error fetching categories: " . mysqli_error($conn));
+    echo "Error: " . mysqli_error($conn);
 }
 
-// Filter products by category if selected
-$category_id = isset($_GET['category']) ? mysqli_real_escape_string($conn, $_GET['category']) : '';
-$query = $category_id ? 
-    "SELECT * FROM products WHERE category_id = '$category_id'" : 
-    "SELECT * FROM products";
+// Check if a category is selected
+if (isset($_GET['category']) && $_GET['category'] != '') {
+    $category_id = $_GET['category'];
+    $query = "SELECT * FROM products WHERE category_id = '$category_id'";
+} else {
+    $query = "SELECT * FROM products";
+}
 
-// Fetch all products
+// Fetch all products from the database
 $result = mysqli_query($conn, $query);
+
+// Check if query is successful
 if (!$result) {
-    die("Error fetching products: " . mysqli_error($conn));
+    echo "Error: " . mysqli_error($conn);
 }
 ?>
 
@@ -43,9 +48,8 @@ if (!$result) {
     <select id="category-dropdown" name="category" onchange="window.location.href='view_product.php?category='+this.value">
         <option value="">All Categories</option>
         <?php while ($category = mysqli_fetch_assoc($category_result)) : ?>
-            <option value="<?php echo htmlspecialchars($category['category_id']); ?>" 
-                <?php if ($category_id == $category['category_id']) echo 'selected'; ?>>
-                <?php echo htmlspecialchars($category['category_name']); ?>
+            <option value="<?php echo $category['category_id']; ?>" <?php if (isset($_GET['category']) && $_GET['category'] == $category['category_id']) echo 'selected'; ?>>
+                <?php echo $category['category_name']; ?>
             </option>
         <?php endwhile; ?>
     </select>
@@ -55,13 +59,13 @@ if (!$result) {
         <ul>
             <?php while ($product = mysqli_fetch_assoc($result)) : ?>
                 <li>
-                    <h3><?php echo htmlspecialchars($product['product_name']); ?></h3>
-                    <p><?php echo htmlspecialchars($product['product_description']); ?></p>
+                    <h3><?php echo $product['product_name']; ?></h3>
+                    <p><?php echo $product['product_description']; ?></p>
                     <p><strong>Price:</strong> ₱<?php echo number_format($product['product_price'], 2); ?></p>
                     
                     <!-- Add to Cart Form -->
                     <form action="cart.php" method="post">
-                        <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['id']); ?>">
+                        <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
                         <label for="quantity_<?php echo $product['id']; ?>">Quantity:</label>
                         <input type="number" name="quantity" id="quantity_<?php echo $product['id']; ?>" value="1" min="1">
                         <button type="submit" name="add_to_cart">Add to Cart</button>
@@ -70,8 +74,8 @@ if (!$result) {
             <?php endwhile; ?>
         </ul>
     <?php else: ?>
-        <p>No products available.</p>
+        <p>No products added yet.</p>
     <?php endif; ?>
 </body>
-<?php require_once 'includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>
 </html>
