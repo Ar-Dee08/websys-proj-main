@@ -164,56 +164,57 @@ html, body {
 
 .footer .row-c {
     margin-top: 10px;
-}form {
+}
+/* FORM FOR ADMIN */
+form {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Spacing between elements */
-    margin: 0 auto; /* Centers the form horizontally */
-    max-width: 400px; /* Restricts the form width for a clean layout */
-    border-radius: 10px; /* Rounded corners */
-    background-color: #F7F7F7;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for better aesthetics */
+    gap: 10px;
+    margin: 0;
+    max-width: 400px;
+    width: 100%;
+    align-items: flex-start;
 }
 
 form input[type="text"],
 form input[type="email"],
 form input[type="password"] {
-    width: 100%; /* Stretches input fields to fit the form width */
-    padding: 10px;
-    border: none; /* Removes the border */
-    border-radius: 4px; /* Keeps rounded corners for input fields */
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #E1E1E1;
+    border-radius: 8px;
     font-size: 1rem;
-    outline: none; /* Removes the focus outline */
-    background-color: #F7F7F7; /* Matches the form background */
+    outline: none;
+    background-color: #F7F7F7;
+    color: #333;
 }
 
 form input[type="text"]:focus,
 form input[type="email"]:focus,
 form input[type="password"]:focus {
-    box-shadow: 0 0 5px rgba(100, 84, 84, 0.3); /* Adds a glow effect on focus */
+    border-color: #A5A5A5;
+    box-shadow: 0 0 5px rgba(100, 84, 84, 0.2);
 }
-
+/* YOU CAN CHANGE THE BUTTON FREELY */
 form button {
-    align-self: center; /* Centers the button in the form */
-    width: 80%; /* Restricts button width */
-    background-color: #645454; /* Professional-looking button color */
-    color: #FFFFFF;
-    border: none; /* Removes the border */
-    padding: 10px 20px;
-    font-size: 1rem;
+    width: 100%; /* Make button full-width */
+    padding: 16px 0; /* Increase padding for a bigger button */
+    font-size: 1.25rem; /* Increase font size */
+    background-color: #645454;
+    color: #E1E1E1;
+    border: none;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    border-radius: 5px;
+    border-radius: 8px;
+    align-self: flex-start;
 }
 
 form button:hover {
-    background-color: #A39090; /* Lighter shade on hover */
-    transform: scale(1.05); /* Slight enlargement for a click effect */
+    background-color: #A39090;
+    transform: translateY(-2px);
 }
 
-/* Optional: Align smaller text or links below buttons */
 form .small-text {
-    text-align: center;
     font-size: 0.875rem;
     color: #645454;
     margin-top: 10px;

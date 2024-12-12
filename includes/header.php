@@ -30,13 +30,15 @@
                         <a class="nav-link" href="products.php">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="cart.php">Cart</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="admins.php">Administrator</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="view_profile.php">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cart.php">
+                            <i class="fa-solid fa-shopping-cart"></i> Cart
+                        </a>
                     </li>
                 </ul>
                 <div class="logout-btn">
@@ -68,6 +70,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="profile.php">Profile</a>
                 </li>
+                <li class="nav-item">
+                        <a class="nav-link" href="cart.php">
+                            <i class="fa-solid fa-shopping-cart"></i> Cart
+                        </a>
+                    </li>
                 <li class="nav-item">
                     <a class="nav-link" href="signout.php">
                         <i class="fa-solid fa-right-from-bracket"></i> Sign Out
