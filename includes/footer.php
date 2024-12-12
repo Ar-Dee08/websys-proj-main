@@ -13,6 +13,7 @@
         <img src="" alt="">
     </div>
   <div class="footer" style="margin: 20px 0;">
+    
     <!-- Icons Row -->
     <div class="row icons-row">
       <a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>
@@ -24,7 +25,8 @@
     <!-- Links Row -->
     <div class="row">
       <ul style="list-style: none; padding: 0;">
-        <!-- To change -->
+
+        <!-- To change, synch with the contents. -->
         <li style="display: inline; margin-right: 10px;"><a href="#">Contact us</a></li>
         <li style="display: inline; margin-right: 10px;"><a href="#">Our Services</a></li>
         <li style="display: inline; margin-right: 10px;"><a href="#">Privacy Policy</a></li>
@@ -39,6 +41,8 @@
     </div>
   </div>
 </footer>
+
+<!-- Footer Internal Styles -->
 <style>
   .footer {
     max-height: 50%;

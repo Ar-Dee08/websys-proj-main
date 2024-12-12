@@ -62,5 +62,4 @@ $stmt->close();
     <button onclick="location.href='edit_profile.php'">Edit Profile</button>
 </body>
 <?php include 'includes/footer.php'; ?>
-
 </html>
