@@ -28,7 +28,7 @@ if (!isset($_SESSION['user_id'])) {
     <form action="view_category.php" method="get">
         <button type="submit">Category</button>
     </form>
-    <form action="edit_product.php" method="get">
+    <form action="add_product.php" method="get">
         <button type="submit">Add Products</button>
     </form>
     <form action="view_product.php" method="get">

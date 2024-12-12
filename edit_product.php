@@ -1,40 +1,55 @@
 <?php
 // Include necessary files
+ob_start(); // Start output buffering
+ini_set('display_errors', 1); 
+ini_set('display_startup_errors', 1);
+
 include 'includes/header.php';
 include('db/db_connection.php');
 
-// Fetch all categories from the database
+// Check if the product ID is set in the URL
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $id = $_GET['id'];
+
+    // Fetch the product details from the database
+    $query = "SELECT * FROM products WHERE id = '$id'";
+    $result = mysqli_query($conn, $query);
+
+    // Check if the product exists
+    if (mysqli_num_rows($result) == 1) {
+        $product = mysqli_fetch_assoc($result);
+    } else {
+        echo "Product not found.";
+        exit;
+    }
+} else {
+    echo "Invalid product ID.";
+    exit;
+}
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $product_name = mysqli_real_escape_string($conn, $_POST['product_name']);
+    $product_description = mysqli_real_escape_string($conn, $_POST['product_description']);
+    $product_price = mysqli_real_escape_string($conn, $_POST['product_price']);
+    $category_id = mysqli_real_escape_string($conn, $_POST['category_id']);
+
+    // Update the product in the database
+    $update_query = "UPDATE products SET product_name='$product_name', product_description='$product_description', product_price='$product_price', category_id='$category_id' WHERE id='$id'";
+
+    if (mysqli_query($conn, $update_query)) {
+        echo "Product updated successfully.";
+        // Optionally redirect to the view product page
+        header("Location: view_product.php");
+        exit;
+    } else {
+        echo "Error updating product: " . mysqli_error($conn);
+    }
+}
+
+// Fetch all categories for the dropdown
 $category_query = "SELECT * FROM categories";
 $category_result = mysqli_query($conn, $category_query);
-
-// Check if query is successful
-if (!$category_result) {
-    echo "Error: " . mysqli_error($conn);
-}
-
-// Check if the form is submitted
-if (isset($_POST['submit'])) {
-    $product_name = $_POST['product_name'];
-    $product_description = $_POST['product_description'];
-    $product_price = $_POST['product_price'];
-    $category_id = $_POST['category_id'];
-
-    // Prepare statement to insert product into database
-    $stmt = $conn->prepare("INSERT INTO products (product_name, product_description, product_price, category_id) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssdi", $product_name, $product_description, $product_price, $category_id); // "ssdi" means string, string, decimal, integer
-
-    // Execute the query
-    if ($stmt->execute()) {
-        echo "Product added successfully!";
-        header("Location: view_product.php");  // Redirect to product gallery after adding product
-        exit();
-    } else {
-        echo "Error: " . $stmt->error;  // Show error message if query fails
-    }
-
-    // Close the prepared statement
-    $stmt->close();
-}
 ?>
 
 <!DOCTYPE html>
@@ -42,29 +57,30 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Profile - Add Product</title>
+    <title>Edit Product - Crumbs & Brew</title>
 </head>
 <body>
-    <h2>Add a New Product</h2>
-    <form action="edit_product.php" method="POST">
-        <label for="product_name">Product Name:</label><br>
-        <input type="text" name="product_name" id="product_name" required><br><br>
+    <h2>Edit Product</h2>
+    <form action="" method="POST">
+        <label for="product_name">Product Name:</label>
+        <input type="text" id="product_name" name="product_name" value="<?php echo htmlspecialchars($product['product_name']); ?>" required><br>
 
-        <label for="product_description">Product Description:</label><br>
-        <textarea name="product_description" id="product_description" required></textarea><br><br>
+        <label for="product_description">Product Description:</label>
+        <textarea id="product_description" name="product_description" required><?php echo htmlspecialchars($product['product_description']); ?></textarea><br>
 
-        <label for="product_price">Product Price:</label><br>
-        <input type="number" name="product_price" id="product_price" required><br><br>
+        <label for="product_price">Product Price:</label>
+        <input type="number" id="product_price" name="product_price" value="<?php echo htmlspecialchars($product['product_price']); ?>" step="0.01" required><br>
 
-        <label for="category_id">Category:</label><br>
-        <select name="category_id" id="category_id" required>
-            <option value="">Select a category</option>
+        <label for="category_id">Category:</label>
+        <select id="category_id" name="category_id" required>
             <?php while ($category = mysqli_fetch_assoc($category_result)) : ?>
-                <option value="<?php echo $category['category_id']; ?>"><?php echo $category['category_name']; ?></option>
+                <option value="<?php echo $category['category_id']; ?>" <?php if ($category['category_id'] == $product['category_id']) echo 'selected'; ?>>
+                    <?php echo $category['category_name']; ?>
+                </option>
             <?php endwhile; ?>
-        </select><br><br>
+        </select><br>
 
-        <input type="submit" name="submit" value="Add Product">
+        <input type="submit" value="Update Product">
     </form>
 </body>
 <?php include 'includes/footer.php'; ?>
