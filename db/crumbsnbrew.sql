@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Dec 12, 2024 at 04:27 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Dec 13, 2024 at 06:46 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,21 @@ SET time_zone = "+00:00";
 --
 -- Database: `crumbsnbrew`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admins`
+--
+
+CREATE TABLE `admins` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -40,9 +55,76 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`category_id`, `category_name`, `category_description`, `created_at`, `updated_at`) VALUES
-(1, 'Coffee', 'A selection of expertly crafted coffee drinks made from high-quality beans.', '2024-12-12 01:31:43', '2024-12-12 14:32:13'),
+(1, 'Coffee', 'A selection of expertly crafted coffee drinks made from high-quality beans.', '2024-12-12 01:31:43', '2024-12-13 01:58:40'),
 (2, 'Tea', 'A selection of expertly brewed teas, carefully curated for a perfect cup.', '2024-12-12 15:16:59', '2024-12-12 15:18:19'),
 (3, 'Pastry', 'A delightful assortment of freshly baked pastries, carefully crafted for a sweet treat.', '2024-12-12 15:20:43', '2024-12-12 15:20:43');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customers`
+--
+
+CREATE TABLE `customers` (
+  `customer_id` int(11) NOT NULL,
+  `customer_name` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `customer_name` varchar(255) NOT NULL,
+  `order_date` datetime DEFAULT current_timestamp(),
+  `customer_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `customer_name`, `order_date`, `customer_id`) VALUES
+(1, 'Allysa Marie', '2024-12-13 12:42:01', NULL),
+(2, 'Archie', '2024-12-13 13:14:02', NULL),
+(3, 'Chiscka', '2024-12-13 13:18:38', NULL),
+(4, 'Alejandro', '2024-12-13 13:22:01', NULL),
+(5, '', '2024-12-13 13:34:38', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_details`
+--
+
+CREATE TABLE `order_details` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `total` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_details`
+--
+
+INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `quantity`, `price`, `total`) VALUES
+(1, 1, 1, 1, 125.00, 125.00),
+(2, 1, 2, 1, 149.00, 149.00),
+(3, 1, 3, 2, 125.00, 250.00),
+(4, 2, 1, 2, 125.00, 250.00),
+(5, 2, 2, 1, 149.00, 149.00),
+(6, 2, 3, 1, 125.00, 125.00),
+(7, 3, 3, 1, 125.00, 125.00),
+(8, 4, 2, 1, 149.00, 149.00),
+(9, 4, 1, 5, 125.00, 625.00),
+(10, 5, 3, 1, 125.00, 125.00);
 
 -- --------------------------------------------------------
 
@@ -87,15 +169,7 @@ CREATE TABLE `user_login` (
 --
 
 INSERT INTO `user_login` (`id`, `username`, `email`, `password`) VALUES
-(1, 'Admin', 'admin@email.com', '$2y$10$0GntiNCE7lPnwhV.FoQ8c.rsXrjRZIM4AbLISko4LUmvm1hWLsJhi'),
-(2, 'Admin2', 'admin2@email.com', '$2y$10$GMbl8dGDpeFeT2zs8H9DT.CliznG11aUVZJhchpZ/4bmB7NAb11RS'),
-(3, 'Admin3', 'admin3@email.com', '$2y$10$UDbBEg.TYhE22geyqbcRsOu1g5jCnwDwy0jK5vIJDPnQ2E1gcRSAS'),
-(4, 'Admin4', 'admin4@email.com', '$2y$10$Jk4vtj0jMJYFyv8N3ySwEuKKtoGJZ3.n42sSUJbMIvPdmQcJ80D9K'),
-(5, 'Admin5', 'admin5@email.com', '$2y$10$DLt2m4zCSDOpIhROoiHTs.1Lk8jI6NrSzXqiwp.idZOYXNEsUqqIm'),
-(31, 'Arjon', 'aj123@gmail.com', '$2y$10$syNHN0PUGkvmQzpikWukxujEmB7sBeTdaMzTE04dTX4sdp/WfseNK'),
-(33, 'Kurukuru', 'fd@gmail.com', '$2y$10$nX/exYihfYVWtxQ/0zJZ9uIJ6gUk3L.yhB3Nxg7RfcCKvyIoDjGHC'),
-(36, 'Grace', 'gra@email.com', '$2y$10$BFOBpgpXqsF1UPRCLZjV8uRwQ.ByU02UK18OBJdMDa09Rgeq/xb7q'),
-(37, 'Ewan', 'asfdahjd@email.com', '$2y$10$Mp86JxSocVK30hiGD9H84.j1oS8z.D98Fwy55m5eFEXHpkAWmevSy');
+(1, 'Grace S. Atrazo', 'gra@email.com', '$2y$10$WVOg7plXzZYcvCr4J5BeHeSVyB91yaNx2OXkzTzvUi4wXmxQzIEPS');
 
 -- --------------------------------------------------------
 
@@ -105,7 +179,7 @@ INSERT INTO `user_login` (`id`, `username`, `email`, `password`) VALUES
 
 CREATE TABLE `user_profile` (
   `user_id` int(11) NOT NULL,
-  `sex` varchar(10) DEFAULT NULL,
+  `sex` varchar(30) DEFAULT NULL,
   `birthdate` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -114,18 +188,45 @@ CREATE TABLE `user_profile` (
 --
 
 INSERT INTO `user_profile` (`user_id`, `sex`, `birthdate`) VALUES
-(36, 'Female', '2004-02-29'),
-(37, 'Male', '2020-01-01');
+(1, 'Female', '2004-02-29');
 
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indexes for table `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`category_id`);
+
+--
+-- Indexes for table `customers`
+--
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`customer_id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer_id` (`customer_id`);
+
+--
+-- Indexes for table `order_details`
+--
+ALTER TABLE `order_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `products`
@@ -151,10 +252,34 @@ ALTER TABLE `user_profile`
 --
 
 --
+-- AUTO_INCREMENT for table `admins`
+--
+ALTER TABLE `admins`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `customers`
+--
+ALTER TABLE `customers`
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `order_details`
+--
+ALTER TABLE `order_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -166,7 +291,18 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `user_login`
 --
 ALTER TABLE `user_login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `order_details`
+--
+ALTER TABLE `order_details`
+  ADD CONSTRAINT `fk_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
