@@ -1,6 +1,5 @@
 <?php
-// Start session and include necessary files
-session_start();
+// Include necessary files
 ob_start(); // Start output buffering
 ini_set('display_errors', 1); 
 ini_set('display_startup_errors', 1);
@@ -42,38 +41,29 @@ if (!$result) {
     <title>View Products</title>
 </head>
 <body>
-    <div class="container-1">
-        <h2>Products List</h2>
-        
-        <!-- Category Dropdown -->
-        <select id="category-dropdown" name="category" onchange="window.location.href='view_product.php?category='+this.value">
-            <option value="">All Categories</option>
-            <?php while ($category = mysqli_fetch_assoc($category_result)) : ?>
-                <option value="<?php echo $category['category_id']; ?>" <?php if (isset($_GET['category']) && $_GET['category'] == $category['category_id']) echo 'selected'; ?>>
-                    <?php echo $category['category_name']; ?>
-                </option>
+    <h2>Products List</h2>
+    
+    <select id="category-dropdown" name="category" onchange="window.location.href='view_product.php?category='+this.value">
+        <option value="">All Categories</option>
+        <?php while ($category = mysqli_fetch_assoc($category_result)) : ?>
+            <option value="<?php echo $category['category_id']; ?>" <?php if (isset($_GET['category']) && $_GET['category'] == $category['category_id']) echo 'selected'; ?>><?php echo $category['category_name']; ?></option>
+        <?php endwhile; ?>
+    </select>
+    
+    <?php if (mysqli_num_rows($result) > 0) : ?>
+        <ul>
+            <?php while ($product = mysqli_fetch_assoc($result)) : ?>
+                <li>
+                    <h3><?php echo $product['product_name']; ?></h3>
+                    <p><?php echo $product['product_description']; ?></p>
+                    <p><strong>Price:</strong> ₱<?php echo number_format($product['product_price'], 2); ?></p>
+                    <a href="edit_product.php?id=<?php echo $product['id']; ?>">Edit</a> <!-- Corrected to use product_id -->
+                </li>
             <?php endwhile; ?>
-        </select>
-        
-        <!-- Product List -->
-        <?php if (mysqli_num_rows($result) > 0) : ?>
-            <ul>
-                <?php while ($product = mysqli_fetch_assoc($result)) : ?>
-                    <li>
-                        <h3><?php echo $product['product_name']; ?></h3>
-                        <p><?php echo $product['product_description']; ?></p>
-                        <p><strong>Price:</strong> ₱<?php echo number_format($product['product_price'], 2); ?></p>
-                    </li>
-                <?php endwhile; ?>
-            </ul>
-        <?php else: ?>
-            <p>No products added yet.</p>
-        <?php endif; ?>
-    </div>
+        </ul>
+    <?php else: ?>
+        <p>No products added yet.</p>
+    <?php endif; ?>
 </body>
-<footer>
-    <?php 
-        include 'includes/footer.php'; 
-    ?>
-</footer> 
+<?php include 'includes/footer.php'; ?>
 </html>
