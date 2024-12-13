@@ -33,9 +33,12 @@ if (!$result) {
                 <?php while ($product = mysqli_fetch_assoc($result)) : ?>
                     <li>
                         <h3><?php echo $product['product_name']; ?></h3>
+                        <?php if (!empty($product['product_image'])): ?>
+                            <img src="<?php echo $product['product_image']; ?>" alt="Product Image" style="width: 150px;">
+                        <?php endif; ?>
                         <p><?php echo $product['product_description']; ?></p>
                         <p><strong>Price:</strong> ₱<?php echo number_format($product['product_price'], 2); ?></p>
-                        <a href="edit_product.php?id=<?php echo $product['id']; ?>">Edit</a> <!-- Edit button for active products -->
+                        <a href="edit_product.php?id=<?php echo $product['id']; ?>">Edit</a>
                     </li>
                 <?php endwhile; ?>
             </ul>

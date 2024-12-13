@@ -5,7 +5,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 include 'includes/header.php';
-include('db/db_connection.php');
+include 'db/db_connection.php';
 
 // Fetch all categories from the database
 $category_query = "SELECT * FROM categories";
@@ -22,13 +22,21 @@ if (isset($_POST['submit'])) {
     $product_description = $_POST['product_description'];
     $product_price = $_POST['product_price'];
     $category_id = $_POST['category_id'];
-    $status = $_POST['status'];  // Get product status
+    $status = $_POST['status'];
 
-    // Prepare statement to insert product into database
-    $stmt = $conn->prepare("INSERT INTO products (product_name, product_description, product_price, category_id, status) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssdii", $product_name, $product_description, $product_price, $category_id, $status); // Add status to the bind parameters
+    // Handle file upload
+    $product_image = null;
+    if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] == 0) {
+        $target_dir = "uploads/";
+        $product_image = $target_dir . basename($_FILES["product_image"]["name"]);
+        move_uploaded_file($_FILES["product_image"]["tmp_name"], $product_image);
+    }
 
-    // Execute the query
+    // Add product to database
+    $stmt = $conn->prepare("INSERT INTO products (product_name, product_description, product_price, category_id, status, product_image) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssdiss", $product_name, $product_description, $product_price, $category_id, $status, $product_image);
+    $stmt->execute();
+    header("Location: view_product.php");
     if ($stmt->execute()) {
         echo "Product added successfully!";
         header("Location: view_product.php");  // Redirect to product gallery after adding product
@@ -77,13 +85,11 @@ if (isset($_POST['submit'])) {
                 <option value="Removed">Removed</option>
             </select><br><br>
 
-            <input type="submit" name="submit" value="Add Product">
-        </form>
-    </div>
-</body>
-<footer>
-    <?php 
-        include 'includes/footer.php'; 
-    ?>
+            <form action="add_product.php" method="POST" enctype="multipart/form-data">
+                <!-- Other fields -->
+                <label for="product_image">Product Image:</label><br>
+                <input type="file" name="product_image" id="product_image" accept="image/*"><br><br>
+                <input type="submit" name="submit" value="Add Product">
+            </form>
 </footer> 
 </html>
