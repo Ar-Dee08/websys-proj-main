@@ -26,6 +26,8 @@ if (isset($_GET['id']) && isset($_GET['confirm']) && $_GET['confirm'] == 'yes') 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete Category</title>
+    <link rel="icon" href="images/img-003.ico" type="image/x-icon">
+    <link href="styles.css" rel="stylesheet">
     <script>
         // JavaScript to confirm deletion
         function confirmDeletion(categoryId) {

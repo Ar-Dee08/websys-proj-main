@@ -48,6 +48,8 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product - Crumbs & Brew</title>
+    <link rel="icon" href="images/img-003.ico" type="image/x-icon">
+    <link href="styles.css" rel="stylesheet">
 </head>
 <body>
     <div class="container-1">
