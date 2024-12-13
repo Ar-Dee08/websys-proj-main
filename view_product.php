@@ -63,14 +63,6 @@ if (!$result) {
                         <h3><?php echo $product['product_name']; ?></h3>
                         <p><?php echo $product['product_description']; ?></p>
                         <p><strong>Price:</strong> ₱<?php echo number_format($product['product_price'], 2); ?></p>
-                        
-                        <!-- Add to Cart Form -->
-                        <form action="cart.php" method="post">
-                            <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
-                            <label for="quantity_<?php echo $product['id']; ?>">Quantity:</label>
-                            <input type="number" name="quantity" id="quantity_<?php echo $product['id']; ?>" value="1" min="1">
-                            <button type="submit" name="add_to_cart">Add to Cart</button>
-                        </form>
                     </li>
                 <?php endwhile; ?>
             </ul>
