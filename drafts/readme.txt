@@ -1,6 +1,8 @@
 login credentials to use:
-admin@email.com
-12345678
+gra@email.com
+grace
+rd@email.com
+rdrd
 
 reminders:
 - user @email.com for the email for formality
@@ -25,18 +27,6 @@ ADD THE UPDATED DB
 to do:
 // dashboard
 - show the count and total amount of the orders depends on the successful checkouts
-// products
-- add edit product for updates
-- add to cart feature
-- add cart page
-- in the cart page, checkbox for the selected products to checkout
-- checkout feature, it will show the total amount and a success message
-// admins
-- tables for admin log
-- can be able to edit or delete
-// customer
-- *is this necessary?*
-
 // frontend part
 - add styling (external, internal, inline css)
 
