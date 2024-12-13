@@ -86,79 +86,79 @@ if (isset($_POST['place_order'])) {
 </head>
 <body>
     <div class="container-1">
-        <?php if ($order_success): ?>
-            <h2>Order Placed Successfully</h2>
-            <p>Thank you, <?php echo htmlspecialchars($customer_name ?: "Customer $order_id"); ?>! Here are your order details:</p>
-            <table border="1">
-                <thead>
+    <?php if ($order_success): ?>
+        <h2>Order Placed Successfully</h2>
+        <p>Thank you, <?php echo htmlspecialchars($customer_name ?: "Customer $order_id"); ?>! Here are your order details:</p>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($order_details as $detail): ?>
                     <tr>
-                        <th>Product Name</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Total</th>
+                        <td><?php echo htmlspecialchars($detail['product_name']); ?></td>
+                        <td><?php echo $detail['quantity']; ?></td>
+                        <td>₱<?php echo number_format($detail['price'], 2); ?></td>
+                        <td>₱<?php echo number_format($detail['total'], 2); ?></td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($order_details as $detail): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($detail['product_name']); ?></td>
-                            <td><?php echo $detail['quantity']; ?></td>
-                            <td>₱<?php echo number_format($detail['price'], 2); ?></td>
-                            <td>₱<?php echo number_format($detail['total'], 2); ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            <p><strong>Total Amount: ₱<?php echo number_format($total_amount, 2); ?></strong></p>
-            <p><strong>Payment: ₱<?php echo number_format($payment, 2); ?></strong></p>
-            <?php if ($payment >= $total_amount): ?>
-                <p><strong>Change: ₱<?php echo number_format($change, 2); ?></strong></p>
-            <?php else: ?>
-                <p><strong>Insufficient payment. Additional amount required: ₱<?php echo number_format(abs($change), 2); ?></strong></p>
-            <?php endif; ?>
-            <a href="transaction.php">View All Transactions</a>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <p><strong>Total Amount: ₱<?php echo number_format($total_amount, 2); ?></strong></p>
+        <p><strong>Payment: ₱<?php echo number_format($payment, 2); ?></strong></p>
+        <?php if ($payment >= $total_amount): ?>
+            <p><strong>Change: ₱<?php echo number_format($change, 2); ?></strong></p>
         <?php else: ?>
-            <h2>Cart</h2>
-            <?php if (!empty($_SESSION['cart'])): ?>
-                <ul>
-                    <?php foreach ($_SESSION['cart'] as $product_id => $quantity): ?>
-                        <?php
-                        $product_query = "SELECT product_name, product_price FROM products WHERE id = $product_id";
-                        $product_result = mysqli_query($conn, $product_query);
-                        $product = mysqli_fetch_assoc($product_result);
-                        $total = $product['product_price'] * $quantity;
-                        $total_amount += $total; // Calculate total amount for all items
-                        ?>
-                        <li>
-                            <h3><?php echo $product['product_name']; ?></h3>
-                            <p>Quantity: <?php echo $quantity; ?></p>
-                            <p>Price: ₱<?php echo number_format($product['product_price'], 2); ?></p>
-                            <p>Total: ₱<?php echo number_format($total, 2); ?></p>
-                            <form method="POST">
-                                <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
-                                <button type="submit" name="remove_item">Remove</button>
-                            </form>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-                <h3>Total Amount: ₱<?php echo number_format($total_amount, 2); ?></h3>
-            <?php else: ?>
-                <p>Your cart is empty.</p>
-            <?php endif; ?>
-            <!-- Add New Order Button -->
-            <h2>Add More Products to Your Cart</h2>
-            <a href="add_order.php">
-                <button>Add New Order</button>
-            </a>
-            <h2>Place Order</h2>
-            <form method="POST">
-                <label for="customer_name">Customer Name:</label>
-                <input type="text" name="customer_name" id="customer_id"><br><br>
-                <label for="payment">Enter Payment Amount:</label>
-                <input type="number" name="payment" id="payment" min="0" step="0.01" required><br><br>
-                <button type="submit" name="place_order">Place Order</button>
-            </form>
+            <p><strong>Insufficient payment. Additional amount required: ₱<?php echo number_format(abs($change), 2); ?></strong></p>
         <?php endif; ?>
+        <a href="transaction.php">View All Transactions</a>
+    <?php else: ?>
+        <h2>Cart</h2>
+        <?php if (!empty($_SESSION['cart'])): ?>
+            <ul>
+                <?php foreach ($_SESSION['cart'] as $product_id => $quantity): ?>
+                    <?php
+                    $product_query = "SELECT product_name, product_price FROM products WHERE id = $product_id";
+                    $product_result = mysqli_query($conn, $product_query);
+                    $product = mysqli_fetch_assoc($product_result);
+                    $total = $product['product_price'] * $quantity;
+                    $total_amount += $total; // Calculate total amount for all items
+                    ?>
+                    <li>
+                        <h3><?php echo $product['product_name']; ?></h3>
+                        <p>Quantity: <?php echo $quantity; ?></p>
+                        <p>Price: ₱<?php echo number_format($product['product_price'], 2); ?></p>
+                        <p>Total: ₱<?php echo number_format($total, 2); ?></p>
+                        <form method="POST">
+                            <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
+                            <button type="submit" name="remove_item">Remove</button>
+                        </form>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+            <h3>Total Amount: ₱<?php echo number_format($total_amount, 2); ?></h3>
+        <?php else: ?>
+            <p>Your cart is empty.</p>
+        <?php endif; ?>
+        <!-- Add New Order Button -->
+        <h2>Add More Products to Your Cart</h2>
+        <a href="add_order.php">
+            <button>Add New Order</button>
+        </a>
+        <h2>Place Order</h2>
+        <form method="POST">
+            <label for="customer_name">Customer Name:</label>
+            <input type="text" name="customer_name" id="customer_id"><br><br>
+            <label for="payment">Enter Payment Amount:</label>
+            <input type="number" name="payment" id="payment" min="0" step="0.01" required><br><br>
+            <button type="submit" name="place_order">Place Order</button>
+        </form>
+    <?php endif; ?>
     </div>
 </body>
 <footer>

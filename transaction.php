@@ -10,15 +10,14 @@ include('db/db_connection.php');
 // Fetch all orders with customer details and calculate the total amount
 $query = "
     SELECT orders.id AS order_id, 
-           orders.customer_id, 
-           COALESCE(customers.customer_name, CONCAT('Customer ID: ', orders.customer_id)) AS customer_display,
+           orders.customer_name,  -- Directly get customer_name from orders table
+           orders.customer_id,    -- Also fetch customer_id if customer_name is empty
            orders.order_date, 
            SUM(order_details.quantity * order_details.price) AS total_amount
     FROM orders
-    LEFT JOIN customers ON orders.customer_id = customers.customer_id
     LEFT JOIN order_details ON orders.id = order_details.order_id
     GROUP BY orders.id
-    ORDER BY orders.id DESC";
+    ORDER BY orders.id ASC";
 $result = mysqli_query($conn, $query);
 
 // Check if the query was successful
@@ -52,13 +51,17 @@ if (!$result) {
                     <?php while ($order = mysqli_fetch_assoc($result)) : ?>
                         <tr>
                             <td><?php echo htmlspecialchars($order['order_id'] ?? 'N/A'); ?></td>
-                            <td><?php echo htmlspecialchars($order['customer_display'] ?? 'N/A'); ?></td> <!-- Using customer_display -->
+                            <td>
+                            <?php
+                                // If customer_name is not set, show customer_id, ensure no null value is passed
+                                echo htmlspecialchars($order['customer_name'] ?? $order['customer_id'] ?? 'Unknown');
+                                ?>
+                            </td>
                             <td><?php echo htmlspecialchars($order['order_date'] ?? 'N/A'); ?></td>
                             <td>₱<?php echo number_format($order['total_amount'] ?? 0, 2); ?></td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>
-
             </table>
         <?php else: ?>
             <p>No transactions found. Add some orders to display them here.</p>
