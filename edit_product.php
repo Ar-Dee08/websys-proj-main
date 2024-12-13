@@ -60,34 +60,28 @@ $category_result = mysqli_query($conn, $category_query);
     <title>Edit Product - Crumbs & Brew</title>
 </head>
 <body>
-    <div class="container-1">
-        <h2>Edit Product</h2>
-        <form action="" method="POST">
-            <label for="product_name">Product Name:</label>
-            <input type="text" id="product_name" name="product_name" value="<?php echo htmlspecialchars($product['product_name']); ?>" required><br>
+    <h2>Edit Product</h2>
+    <form action="" method="POST">
+        <label for="product_name">Product Name:</label>
+        <input type="text" id="product_name" name="product_name" value="<?php echo htmlspecialchars($product['product_name']); ?>" required><br>
 
-            <label for="product_description">Product Description:</label>
-            <textarea id="product_description" name="product_description" required><?php echo htmlspecialchars($product['product_description']); ?></textarea><br>
+        <label for="product_description">Product Description:</label>
+        <textarea id="product_description" name="product_description" required><?php echo htmlspecialchars($product['product_description']); ?></textarea><br>
 
-            <label for="product_price">Product Price:</label>
-            <input type="number" id="product_price" name="product_price" value="<?php echo htmlspecialchars($product['product_price']); ?>" step="0.01" required><br>
+        <label for="product_price">Product Price:</label>
+        <input type="number" id="product_price" name="product_price" value="<?php echo htmlspecialchars($product['product_price']); ?>" step="0.01" required><br>
 
-            <label for="category_id">Category:</label>
-            <select id="category_id" name="category_id" required>
-                <?php while ($category = mysqli_fetch_assoc($category_result)) : ?>
-                    <option value="<?php echo $category['category_id']; ?>" <?php if ($category['category_id'] == $product['category_id']) echo 'selected'; ?>>
-                        <?php echo $category['category_name']; ?>
-                    </option>
-                <?php endwhile; ?>
-            </select><br>
+        <label for="category_id">Category:</label>
+        <select id="category_id" name="category_id" required>
+            <?php while ($category = mysqli_fetch_assoc($category_result)) : ?>
+                <option value="<?php echo $category['category_id']; ?>" <?php if ($category['category_id'] == $product['category_id']) echo 'selected'; ?>>
+                    <?php echo $category['category_name']; ?>
+                </option>
+            <?php endwhile; ?>
+        </select><br>
 
-            <input type="submit" value="Update Product">
-        </form>
-    </div>
+        <input type="submit" value="Update Product">
+    </form>
 </body>
-<footer>
-    <?php 
-        include 'includes/footer.php'; 
-    ?>
-</footer> 
+<?php include 'includes/footer.php'; ?>
 </html>
