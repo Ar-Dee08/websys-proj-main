@@ -7,8 +7,8 @@ error_reporting(E_ALL);
 include 'includes/header.php';
 include('db/db_connection.php');
 
-// Fetch active products from the database
-$query = "SELECT * FROM products WHERE status = 'Active'";  // Only fetch active products
+// Fetch removed products from the database
+$query = "SELECT * FROM products WHERE status = 'Removed'";  // Only fetch removed products
 $result = mysqli_query($conn, $query);
 
 if (!$result) {
@@ -22,11 +22,12 @@ if (!$result) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Active Products</title>
+    <title>Removed Products</title>
 </head>
 <body>
     <div class="container-1">
-        <h2>Active Products List</h2>
+        <h2>Removed Products List</h2>
+        
         <?php if (mysqli_num_rows($result) > 0) : ?>
             <ul>
                 <?php while ($product = mysqli_fetch_assoc($result)) : ?>
@@ -34,14 +35,17 @@ if (!$result) {
                         <h3><?php echo $product['product_name']; ?></h3>
                         <p><?php echo $product['product_description']; ?></p>
                         <p><strong>Price:</strong> ₱<?php echo number_format($product['product_price'], 2); ?></p>
-                        <a href="edit_product.php?id=<?php echo $product['id']; ?>">Edit</a> <!-- Edit button for active products -->
+                        <form action="update_product.php" method="POST">
+                            <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
+                            <input type="submit" name="reactivate" value="Reactivate">
+                        </form>
+                        <a href="edit_product.php?id=<?php echo $product['id']; ?>">Edit</a> <!-- Edit button for removed products -->
                     </li>
                 <?php endwhile; ?>
             </ul>
         <?php else: ?>
-            <p>No active products available.</p>
+            <p>No removed products available.</p>
         <?php endif; ?>
-        <a href="removed_product.php">View Removed Products</a>
     </div>
 </body>
 <footer>

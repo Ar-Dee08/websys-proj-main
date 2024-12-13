@@ -26,6 +26,7 @@ if (!$result) {
 </head>
 <body>
     <div class="container-1">
+    <h2>Categories List</h2>
         <?php if (mysqli_num_rows($result) > 0) : ?>
             <ul>
                 <?php while ($category = mysqli_fetch_assoc($result)) : ?>
@@ -42,7 +43,6 @@ if (!$result) {
         <?php endif; ?>
         <a href="edit_category.php">Add New Category</a>
     </div>
-    <h2>Categories List</h2>
 </body>
 <footer>
     <?php 
