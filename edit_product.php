@@ -5,7 +5,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 include 'includes/header.php';
-include 'db/db_connection.php';
+include('db/db_connection.php');
 
 // Check if the product ID is set in the URL
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
@@ -15,7 +15,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $query = "SELECT * FROM products WHERE id = '$id'";
     $result = mysqli_query($conn, $query);
 
-    // Check if the product exists
     if (mysqli_num_rows($result) == 1) {
         $product = mysqli_fetch_assoc($result);
     } else {
@@ -33,24 +32,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_description = mysqli_real_escape_string($conn, $_POST['product_description']);
     $product_price = mysqli_real_escape_string($conn, $_POST['product_price']);
     $category_id = mysqli_real_escape_string($conn, $_POST['category_id']);
-    $status = mysqli_real_escape_string($conn, $_POST['status']); // Added status
+    $status = mysqli_real_escape_string($conn, $_POST['status']);
 
-    // Handle file upload
-    if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] == 0) {
-        $target_dir = "uploads/";
-        $product_image = $target_dir . basename($_FILES["product_image"]["name"]);
-        move_uploaded_file($_FILES["product_image"]["tmp_name"], $product_image);
-
-        // Update image path in the database
-        $update_image_query = "UPDATE products SET product_image='$product_image' WHERE id='$id'";
-        mysqli_query($conn, $update_image_query);
+    // Handle image upload
+    $img = $product['img']; // Default to existing image
+    if (isset($_FILES['img']) && $_FILES['img']['error'] == UPLOAD_ERR_OK) {
+        $img = file_get_contents($_FILES['img']['tmp_name']);
     }
-// Update the product in the database
-$update_query = "UPDATE products SET product_name='$product_name', product_description='$product_description', product_price='$product_price', category_id='$category_id', status='$status' WHERE id='$id'";
 
-    if (mysqli_query($conn, $update_query)) {
-        echo "Product updated successfully.";
-        // Optionally redirect to the view product page
+    // Update the product in the database
+    $update_query = "UPDATE products SET product_name='$product_name', product_description='$product_description', product_price='$product_price', category_id='$category_id', status='$status', img=? WHERE id='$id'";
+    $stmt = mysqli_prepare($conn, $update_query);
+    mysqli_stmt_bind_param($stmt, "b", $img);
+    if (mysqli_stmt_execute($stmt)) {
         header("Location: view_product.php");
         exit;
     } else {
@@ -68,16 +62,14 @@ $category_result = mysqli_query($conn, $category_query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Product - Crumbs & Brew</title>
-    <link rel="icon" href="images/img-003.ico" type="image/x-icon">
-    <link href="styles.css" rel="stylesheet">
+    <title>Edit Product</title>
 </head>
 <body>
     <div class="container-1">
         <h2>Edit Product</h2>
-        <form action="" method="POST">
-            <label for="product_name">Product Name:</label>
         <form action="" method="POST" enctype="multipart/form-data">
+            <label for="product_name">Product Name:</label>
+            <input type="text" id="product_name" name="product_name" value="<?php echo htmlspecialchars($product['product_name']); ?>" required><br>
 
             <label for="product_description">Product Description:</label>
             <textarea id="product_description" name="product_description" required><?php echo htmlspecialchars($product['product_description']); ?></textarea><br>
@@ -94,25 +86,23 @@ $category_result = mysqli_query($conn, $category_query);
                 <?php endwhile; ?>
             </select><br>
 
-            <!-- Status Field -->
             <label for="status">Status:</label>
             <select name="status" id="status" required>
                 <option value="Active" <?php if ($product['status'] == 'Active') echo 'selected'; ?>>Active</option>
                 <option value="Removed" <?php if ($product['status'] == 'Removed') echo 'selected'; ?>>Removed</option>
             </select><br>
 
-        <form action="" method="POST" enctype="multipart/form-data">
-            <!-- Other fields -->
-            <label for="product_image">Product Image:</label><br>
-            <?php if (!empty($product['product_image'])): ?>
-                <img src="<?php echo $product['product_image']; ?>" alt="Product Image" style="width: 150px;"><br>
+            <label for="img">Product Image:</label>
+            <input type="file" name="img" id="img" accept="image/*"><br>
+            <?php if (!empty($product['img'])): ?>
+                <img src="data:image/jpeg;base64,<?php echo base64_encode($product['img']); ?>" alt="Product Image" width="150"><br>
             <?php endif; ?>
-            <input type="file" name="product_image" id="product_image" accept="image/*"><br><br>
+
             <input type="submit" value="Update Product">
         </form>
+    </div>
+</body>
 <footer>
-    <?php 
-        include 'includes/footer.php'; 
-    ?>
+    <?php include 'includes/footer.php'; ?>
 </footer> 
 </html>

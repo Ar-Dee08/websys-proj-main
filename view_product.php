@@ -14,7 +14,6 @@ $result = mysqli_query($conn, $query);
 if (!$result) {
     echo "Error: " . mysqli_error($conn);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -23,8 +22,6 @@ if (!$result) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Active Products</title>
-    <link rel="icon" href="images/img-003.ico" type="image/x-icon">
-    <link href="styles.css" rel="stylesheet">
 </head>
 <body>
     <div class="container-1">
@@ -34,10 +31,11 @@ if (!$result) {
             <ul>
                 <?php while ($product = mysqli_fetch_assoc($result)) : ?>
                     <li>
+                        <!-- Display the image directly -->
+                        <img src="<?php echo !empty($product['img']) ? htmlspecialchars($product['img']) : 'default_image.png'; ?>" 
+                             alt="Product Image" width="150">
+                             
                         <h3><?php echo $product['product_name']; ?></h3>
-                        <?php if (!empty($product['product_image'])): ?>
-                            <img src="<?php echo $product['product_image']; ?>" alt="Product Image" style="width: 150px;">
-                        <?php endif; ?>
                         <p><?php echo $product['product_description']; ?></p>
                         <p><strong>Price:</strong> ₱<?php echo number_format($product['product_price'], 2); ?></p>
                         <a href="edit_product.php?id=<?php echo $product['id']; ?>">Edit</a>
@@ -51,8 +49,6 @@ if (!$result) {
     </div>
 </body>
 <footer>
-    <?php 
-        include 'includes/footer.php'; 
-    ?>
+    <?php include 'includes/footer.php'; ?>
 </footer> 
 </html>

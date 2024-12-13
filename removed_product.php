@@ -23,8 +23,6 @@ if (!$result) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Removed Products</title>
-    <link rel="icon" href="images/img-003.ico" type="image/x-icon">
-    <link href="styles.css" rel="stylesheet">
 </head>
 <body>
     <div class="container-1">
@@ -34,16 +32,13 @@ if (!$result) {
                 <?php while ($product = mysqli_fetch_assoc($result)) : ?>
                     <li>
                         <h3><?php echo $product['product_name']; ?></h3>
-                        <?php if (!empty($product['product_image'])): ?>
-                            <img src="<?php echo $product['product_image']; ?>" alt="Product Image" style="width: 150px;">
-                        <?php endif; ?>
                         <p><?php echo $product['product_description']; ?></p>
                         <p><strong>Price:</strong> ₱<?php echo number_format($product['product_price'], 2); ?></p>
                         <form action="update_product.php" method="POST">
                             <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
                             <input type="submit" name="reactivate" value="Reactivate">
                         </form>
-                        <a href="edit_product.php?id=<?php echo $product['id']; ?>">Edit</a>
+                        <a href="edit_product.php?id=<?php echo $product['id']; ?>">Edit</a> <!-- Edit button for removed products -->
                     </li>
                 <?php endwhile; ?>
             </ul>

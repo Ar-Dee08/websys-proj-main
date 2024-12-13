@@ -1,6 +1,6 @@
 <?php
 ob_start(); // Start output buffering
-ini_set('display_errors', 1); 
+ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
@@ -54,6 +54,7 @@ if (!$result) {
 <body>
     <div class="container-1">
         <br><h1>Admins List</h1>
+        <p style="color: red;">Note: Only the moderator can edit admin credentials.</p>
         <table border="1">
             <tr>
                 <th>ID</th>
@@ -63,13 +64,16 @@ if (!$result) {
             </tr>
             <?php while ($row = $result->fetch_assoc()): ?>
                 <tr>
-                    <td><?= $row['id'] ?></td>
-                    <td><?= $row['username'] ?></td>
-                    <td><?= $row['email'] ?></td>
+                    <td><?= htmlspecialchars($row['id']) ?></td>
+                    <td><?= htmlspecialchars($row['username']) ?></td>
+                    <td><?= htmlspecialchars($row['email']) ?></td>
                     <td>
-                        <a href="edit_admins.php?id=<?= $row['id'] ?>">Edit</a>
+                        <?php if ($_SESSION['user_id'] == 1): ?>
+                            <a href="edit_admin.php?id=<?= htmlspecialchars($row['id']) ?>">Edit</a>
+                        <?php else: ?>
+                            <span style="color: gray;">Edit Disabled</span>
+                        <?php endif; ?>
                     </td>
-                    <td></td>
                 </tr>
             <?php endwhile; ?>
         </table>

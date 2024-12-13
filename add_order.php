@@ -46,8 +46,6 @@ $product_result = mysqli_query($conn, $product_query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Order</title>
-    <link rel="icon" href="images/img-003.ico" type="image/x-icon">
-    <link href="styles.css" rel="stylesheet">
 </head>
 <body>
     <div class="container-1">
@@ -58,12 +56,12 @@ $product_result = mysqli_query($conn, $product_query);
                 <ul>
                     <?php while ($product = mysqli_fetch_assoc($product_result)): ?>
                         <li>
+                            <input type="checkbox" name="product_id[]" value="<?php echo $product['id']; ?>" id="product_<?php echo $product['id']; ?>">
                             <label for="product_<?php echo $product['id']; ?>"><?php echo $product['product_name']; ?></label><br>
-                            <?php if (!empty($product['product_image'])): ?>
-                                <img src="<?php echo $product['product_image']; ?>" alt="Product Image" style="width: 150px;"><br>
-                            <?php endif; ?>
                             <p><?php echo $product['product_description']; ?></p>
                             <p><strong>Price:</strong> ₱<?php echo number_format($product['product_price'], 2); ?></p>
+                            <label for="quantity_<?php echo $product['id']; ?>">Quantity:</label>
+                            <input type="number" name="quantity[]" id="quantity_<?php echo $product['id']; ?>" min="1" value="1" required><br><br>
                         </li>
                     <?php endwhile; ?>
                 </ul>

@@ -1,6 +1,6 @@
 <?php
 ob_start(); // Start output buffering
-ini_set('display_errors', 1); 
+ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
@@ -18,12 +18,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_admin'])) {
     $new_email = $_POST['email'];
     $new_password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
-    $sql = "INSERT INTO user_login (username, email, password) VALUES ('$new_username', '$new_email', '$new_password')";
-    if ($conn->query($sql) === TRUE) {
+    // Use prepared statement to prevent SQL injection
+    $stmt = $conn->prepare("INSERT INTO user_login (username, email, password) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $new_username, $new_email, $new_password);
+
+    if ($stmt->execute()) {
         header("Location: view_admin.php");
         exit();
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " . $stmt->error;
     }
 }
 ?>

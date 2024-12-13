@@ -18,6 +18,11 @@ if (!isset($_GET['id'])) {
 
 $id = $_GET['id'];
 
+// Allow only the admin with ID 1 to edit admin credentials
+if ($_SESSION['user_id'] != 1) {
+    die("You do not have permission to edit admin credentials.");
+}
+
 // Fetch the admin details
 $sql = "SELECT * FROM user_login WHERE id = '$id'";
 $result = $conn->query($sql);
@@ -34,17 +39,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_admin'])) {
     $edit_email = $_POST['email'];
     $edit_password = !empty($_POST['password']) ? password_hash($_POST['password'], PASSWORD_BCRYPT) : null;
 
-    $sql = "UPDATE user_login SET username='$edit_username', email='$edit_email'";
+    // Use prepared statements to prevent SQL injection
     if ($edit_password) {
-        $sql .= ", password='$edit_password'";
+        $stmt = $conn->prepare("UPDATE user_login SET username = ?, email = ?, password = ? WHERE id = ?");
+        $stmt->bind_param("sssi", $edit_username, $edit_email, $edit_password, $id);
+    } else {
+        $stmt = $conn->prepare("UPDATE user_login SET username = ?, email = ? WHERE id = ?");
+        $stmt->bind_param("ssi", $edit_username, $edit_email, $id);
     }
-    $sql .= " WHERE id='$id'";
 
-    if ($conn->query($sql) === TRUE) {
+    if ($stmt->execute()) {
         header("Location: view_admin.php");
         exit();
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " . $stmt->error;
     }
 }
 ?>
@@ -61,9 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_admin'])) {
 <body>
     <div class="container-1">
         <h1>Edit Admin</h1>
-        <form action="edit_admin.php?id=<?= $id ?>" method="POST">
-            <input type="text" name="username" value="<?= $admin['username'] ?>" required>
-            <input type="email" name="email" value="<?= $admin['email'] ?>" required>
+        <form action="edit_admin.php?id=<?= htmlspecialchars($id) ?>" method="POST">
+            <input type="text" name="username" value="<?= htmlspecialchars($admin['username']) ?>" required>
+            <input type="email" name="email" value="<?= htmlspecialchars($admin['email']) ?>" required>
             <input type="password" name="password" placeholder="New password (optional)">
             <button type="submit" name="edit_admin">Update Admin</button>
         </form>
