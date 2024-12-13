@@ -30,6 +30,9 @@
                         <a class="nav-link" href="products.php">Products</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="transaction.php">Transaction</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="view_admin.php">Administrator</a>
                     </li>
                     <li class="nav-item">

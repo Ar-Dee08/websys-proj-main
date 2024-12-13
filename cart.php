@@ -1,117 +1,129 @@
 <?php
-// Start session and include necessary files
-session_start();
 ob_start(); // Start output buffering
-ini_set('display_errors', 1); 
-ini_set('display_startup_errors', 1);
-
+session_start();
 include 'includes/header.php';
 include('db/db_connection.php');
 
-// Handle adding products to cart
-if (isset($_POST['add_to_cart'])) {
+// Handle removing items from the cart
+if (isset($_POST['remove_item'])) {
     $product_id = $_POST['product_id'];
-    $quantity = $_POST['quantity'];
+    unset($_SESSION['cart'][$product_id]);
+}
 
-    // Fetch product details
-    $product_query = "SELECT * FROM products WHERE id = '$product_id'";
-    $product_result = mysqli_query($conn, $product_query);
-    $product = mysqli_fetch_assoc($product_result);
+// Initialize variables
+$order_success = false;
+$order_details = [];
 
-    if ($product) {
-        $cart_item = [
-            'id' => $product['id'],
-            'name' => $product['product_name'],
-            'price' => $product['product_price'],
-            'quantity' => $quantity,
-        ];
+// Handle placing the order
+if (isset($_POST['place_order'])) {
+    $customer_name = $_POST['customer_name'];
+    $order_items = $_SESSION['cart'];
 
-        // Add to session cart
-        if (!isset($_SESSION['cart'])) {
-            $_SESSION['cart'] = [];
-        }
+    if (!empty($order_items)) {
+        // Insert the order into the orders table
+        $order_query = "INSERT INTO orders (customer_name, order_date) VALUES ('$customer_name', NOW())";
+        if (mysqli_query($conn, $order_query)) {
+            $order_id = mysqli_insert_id($conn);
 
-        $found = false;
-        foreach ($_SESSION['cart'] as &$item) {
-            if ($item['id'] == $product_id) {
-                $item['quantity'] += $quantity;
-                $found = true;
-                break;
+            // Insert each item into the order_details table
+            foreach ($order_items as $product_id => $quantity) {
+                $product_query = "SELECT product_price FROM products WHERE id = $product_id";
+                $product_result = mysqli_query($conn, $product_query);
+                $product = mysqli_fetch_assoc($product_result);
+
+                $price = $product['product_price'];
+                $total = $price * $quantity;
+
+                $order_detail_query = "INSERT INTO order_details (order_id, product_id, quantity, price, total) 
+                                       VALUES ($order_id, $product_id, $quantity, $price, $total)";
+                mysqli_query($conn, $order_detail_query);
+
+                // Add to order details for display
+                $order_details[] = [
+                    'product_name' => $product['product_name'],
+                    'quantity' => $quantity,
+                    'price' => $price,
+                    'total' => $total,
+                ];
             }
+
+            // Clear the cart
+            $_SESSION['cart'] = [];
+            $order_success = true;
+        } else {
+            echo "<p>Error placing order: " . mysqli_error($conn) . "</p>";
         }
-
-        if (!$found) {
-            $_SESSION['cart'][] = $cart_item;
-        }
+    } else {
+        echo "<p>Your cart is empty!</p>";
     }
-}
-
-// Handle updating quantities
-if (isset($_POST['update_cart'])) {
-    foreach ($_POST['quantities'] as $key => $quantity) {
-        if (isset($_SESSION['cart'][$key])) {
-            $_SESSION['cart'][$key]['quantity'] = $quantity;
-        }
-    }
-}
-
-// Handle removing items
-if (isset($_POST['remove_items'])) {
-    foreach ($_POST['remove'] as $key) {
-        unset($_SESSION['cart'][$key]);
-    }
-}
-
-// Handle checkout (example placeholder)
-if (isset($_POST['checkout'])) {
-    echo "<script>alert('Checkout completed!')</script>";
-    unset($_SESSION['cart']);
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart</title>
+    <title>Cart</title>
 </head>
 <body>
-    <h2>Shopping Cart</h2>
-    <a href="view_product.php">Back to Products</a>
-    <form method="post">
-        <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
-            <table border="1">
-                <thead>
+    <?php if ($order_success): ?>
+        <h2>Order Placed Successfully</h2>
+        <p>Thank you, <?php echo htmlspecialchars($customer_name); ?>! Here are your order details:</p>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($order_details as $detail): ?>
                     <tr>
-                        <th>Select</th>
-                        <th>Product Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
+                        <td><?php echo htmlspecialchars($detail['product_name']); ?></td>
+                        <td><?php echo $detail['quantity']; ?></td>
+                        <td>₱<?php echo number_format($detail['price'], 2); ?></td>
+                        <td>₱<?php echo number_format($detail['total'], 2); ?></td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($_SESSION['cart'] as $key => $item): ?>
-                        <tr>
-                            <td><input type="checkbox" name="remove[]" value="<?php echo $key; ?>"></td>
-                            <td><?php echo $item['name']; ?></td>
-                            <td>₱<?php echo number_format($item['price'], 2); ?></td>
-                            <td>
-                                <input type="number" name="quantities[<?php echo $key; ?>]" value="<?php echo $item['quantity']; ?>" min="1">
-                            </td>
-                            <td>₱<?php echo number_format($item['price'] * $item['quantity'], 2); ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            <br>
-            <button type="submit" name="update_cart">Update Quantities</button>
-            <button type="submit" name="remove_items">Remove Selected Items</button>
-            <button type="submit" name="checkout">Checkout</button>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <a href="transaction.php">View All Transactions</a>
+    <?php else: ?>
+        <h2>Cart</h2>
+        <?php if (!empty($_SESSION['cart'])): ?>
+            <ul>
+                <?php foreach ($_SESSION['cart'] as $product_id => $quantity): ?>
+                    <?php
+                    $product_query = "SELECT product_name, product_price FROM products WHERE id = $product_id";
+                    $product_result = mysqli_query($conn, $product_query);
+                    $product = mysqli_fetch_assoc($product_result);
+                    ?>
+                    <li>
+                        <h3><?php echo $product['product_name']; ?></h3>
+                        <p>Quantity: <?php echo $quantity; ?></p>
+                        <p>Price: ₱<?php echo number_format($product['product_price'], 2); ?></p>
+                        <p>Total: ₱<?php echo number_format($product['product_price'] * $quantity, 2); ?></p>
+                        <form method="POST">
+                            <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
+                            <button type="submit" name="remove_item">Remove</button>
+                        </form>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
         <?php else: ?>
             <p>Your cart is empty.</p>
         <?php endif; ?>
-    </form>
+
+        <h2>Place Order</h2>
+        <form method="POST">
+            <label for="customer_name">Customer Name:</label>
+            <input type="text" name="customer_name" id="customer_name" required>
+            <button type="submit" name="place_order">Place Order</button>
+        </form>
+    <?php endif; ?>
 </body>
 <?php include 'includes/footer.php'; ?>
 </html>
