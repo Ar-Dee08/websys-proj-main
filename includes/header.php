@@ -59,32 +59,63 @@
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menu</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="dashboard.php">Home</a>
+        <div>
+        <br>
+        <ul class="form-list">
+        <li class="form-it">
+            <a class="form-lin" href="dashboard.php">
+                <i class="fa-solid fa-house"></i> Home
+            </a>
+        </li>
+        <li class="form-it">
+            <a class="form-lin collapsible" href="#">
+                <i class="fa-solid fa-box"></i> Products
+            </a>
+            <ul class="form-list sub-list">
+                <li class="form-it">
+                    <a class="form-lin" href="view_category.php">
+                        <i class="fa-solid fa-tags"></i> Category
+                    </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="products.php">Products</a>
+                <li class="form-it">
+                    <a class="form-lin" href="add_product.php">
+                        <i class="fa-solid fa-plus"></i> Add Products
+                    </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="view_admin.php">Administrator</a>
+                <li class="form-it">
+                    <a class="form-lin" href="view_product.php">
+                        <i class="fa-solid fa-images"></i> Product Gallery
+                    </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="profile.php">Profile</a>
-                </li>
-                <li class="nav-item">
-                        <a class="nav-link" href="cart.php">
-                            <i class="fa-solid fa-shopping-cart"></i> Cart
-                        </a>
-                    </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="signout.php">
-                        <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+                <li class="form-it">
+                    <a class="form-lin" href="add_order.php">
+                        <i class="fa-solid fa-cart-plus"></i> Add New Order
                     </a>
                 </li>
             </ul>
-        </div>
+        </li>
+        <li class="form-it">
+            <a class="form-lin" href="view_admin.php">
+                <i class="fa-solid fa-user-shield"></i> Administrator
+            </a>
+        </li>
+        <li class="form-it">
+            <a class="form-lin" href="view_profile.php">
+                <i class="fa-solid fa-user"></i> Profile
+            </a>
+        </li>
+        <li class="form-it">
+            <a class="form-lin" href="cart.php">
+                <i class="fa-solid fa-shopping-cart"></i> Cart
+            </a>
+        </li>
+        <li class="form-it">
+            <a class="form-lin" href="signout.php">
+                <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+            </a>
+        </li>
+    </ul>
+</div>
     </div>
 
     <!-- Bootstrap JS Bundle -->
