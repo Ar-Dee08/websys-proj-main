@@ -50,17 +50,24 @@ if (!$result) {
     <title>Admins List</title>
     <link rel="icon" href="images/img-003.ico" type="image/x-icon">
     <link href="styles.css" rel="stylesheet">
+    <style>
+        table, th, td {
+            background-color: white;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
 </head>
 <body>
     <div class="container-1">
         <br><h1><strong>Admins List</strong></h1>
         <p style="color: red;">Note: Only the moderator can edit admin credentials.</p>
-        <table border="1">
+        <table style="width: 100%;">
             <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Actions</th>
+                <th><strong>ID</strong></th>
+                <th><strong>Username</strong></th>
+                <th><strong>Email</strong></th>
+                <th><strong>Actions</strong></th>
             </tr>
             <?php while ($row = $result->fetch_assoc()): ?>
                 <tr>
@@ -80,6 +87,7 @@ if (!$result) {
 
         <!-- Pagination -->
         <div>
+            <br>
             <?php if ($page > 1): ?>
                 <a href="?page=<?= $page - 1 ?>">Previous</a>
             <?php endif; ?>

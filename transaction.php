@@ -35,18 +35,25 @@ if (!$result) {
     <title>Transactions</title>
     <link rel="icon" href="images/img-003.ico" type="image/x-icon">
     <link href="styles.css" rel="stylesheet">
+    <style>
+        table, th, td {
+            background-color: white;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
 </head>
 <body>
     <div class="container-1">
         <h2><strong>Transaction Records</strong></h2>
         <?php if (mysqli_num_rows($result) > 0): ?>
-            <table border="1">
+            <table border="1" style="width: 100%; border-collapse: collapse;">
                 <thead>
                     <tr>
-                        <th>Order ID</th>
-                        <th>Customer</th>
-                        <th>Order Date</th>
-                        <th>Total Amount</th>
+                        <th><strong>Order ID</strong></th>
+                        <th><strong>Customer</strong></th>
+                        <th><strong>Order Date</strong></th>
+                        <th><strong>Total Amount</strong></th>
                     </tr>
                 </thead>
                 <tbody>
