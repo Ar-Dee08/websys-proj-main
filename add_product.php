@@ -58,8 +58,8 @@ if (isset($_POST['submit'])) {
 </head>
 <body>
     <div class="container-1">
-        <button onclick="window.history.back()">Back to Previous Page</button>
-        <h2>Add a New Product</h2>
+        <button onclick="window.history.back()" style="color: white; background-color: #493628; font-weight: bold; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Back to Previous Page</button><br>
+        <h2><b>Add a New Product</b></h2>
         <form action="add_product.php" method="POST" enctype="multipart/form-data">
             <label for="product_name">Product Name:</label><br>
             <input type="text" name="product_name" id="product_name" required><br><br>
@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
             <label for="prod_img">Product Image:</label><br>
             <input type="file" name="prod_img" id="prod_img"><br><br>
 
-            <input type="submit" name="submit" value="Add Product">
+            <input type="submit" name="submit" value="Add Product" style="color: white; background-color: #493628; font-weight: bold; padding: 10px 20px; border-radius: 5px;">
         </form>
     </div>
 </body>

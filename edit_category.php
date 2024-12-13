@@ -50,6 +50,7 @@ if (isset($_POST['submit'])) {
 </head>
 <body>
     <div class="container-1">
+    <h2><strong><?php echo (isset($_GET['id'])) ? 'Edit Category' : 'Add New Category'; ?></strong></h2>
         <form action="" method="post">
             <label for="category_name">Category Name:</label>
             <input type="text" id="category_name" name="category_name" value="<?php echo (isset($category)) ? $category['category_name'] : ''; ?>">
@@ -57,10 +58,9 @@ if (isset($_POST['submit'])) {
             <label for="category_description">Category Description:</label>
             <textarea id="category_description" name="category_description"><?php echo (isset($category)) ? $category['category_description'] : ''; ?></textarea>
             <br><br>
-            <input type="submit" name="submit" value="<?php echo (isset($_GET['id'])) ? 'Update' : 'Add'; ?>">
+            <input type="submit" name="submit" value="<?php echo (isset($_GET['id'])) ? 'Update' : 'Add'; ?>" style="color: white; background-color: #493628; font-weight: bold; padding: 10px 20px; border-radius: 5px; text-decoration: none;">
         </form>
     </div>
-    <h2><?php echo (isset($_GET['id'])) ? 'Edit Category' : 'Add New Category'; ?></h2>
 </body>
 <footer>
     <?php 

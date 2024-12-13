@@ -27,7 +27,7 @@ if (!isset($_SESSION['user_id'])) {
     <?php include 'includes/header.php'; ?>
     <div class="container-1">
         <div class="content" style="text-align: center; align-items: center;">
-        <h2>Product Page</h2>
+        <h2><strong>Product Page</strong></h2>
         <form action="view_category.php" method="get" style="display: inline-block; width: 500%;">
             <button type="submit" style="width: 100%;">Category</button>
         </form>

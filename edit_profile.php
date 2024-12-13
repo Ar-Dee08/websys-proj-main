@@ -104,7 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <div class="container-1">
-    <h1>Edit Profile</h1>
+    <button onclick="window.history.back()" style="color: white; background-color: #493628; font-weight: bold; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Back to Previous Page</button><br>
+    <h1><strong>Edit Profile</strong></h1>
         <form method="POST" action="">
             <label for="name">Name:</label>
             <input type="text" id="name" name="username" value="<?php echo htmlspecialchars($row['username']); ?>" required><br>

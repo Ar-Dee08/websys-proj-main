@@ -53,7 +53,7 @@ if (!$result) {
 </head>
 <body>
     <div class="container-1">
-        <br><h1>Admins List</h1>
+        <br><h1><strong>Admins List</strong></h1>
         <p style="color: red;">Note: Only the moderator can edit admin credentials.</p>
         <table border="1">
             <tr>
@@ -97,7 +97,7 @@ if (!$result) {
 
         <br>
         <a href="add_admin.php">
-            <button>Add New Account</button>
+            <button style="color: white; background-color: #493628; font-weight: bold; padding: 10px 20px; border-radius: 5px;">Add New Account</button>
         </a>
     </div>
 </body>

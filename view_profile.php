@@ -55,12 +55,12 @@ $stmt->close();
 </head>
 <body>
     <div class="container-1">
-        <h1>Profile Page</h1>
+        <h1><strong>Profile Page</strong></h1>
         <p><strong>Name:</strong> <?php echo htmlspecialchars($row['username']); ?></p>
         <p><strong>Email:</strong> <?php echo htmlspecialchars($row['email']); ?></p>
         <p><strong>Birthdate:</strong> <?php echo htmlspecialchars($row['birthdate'] ?? 'Not Set'); ?></p>
         <p><strong>Sex:</strong> <?php echo htmlspecialchars($row['sex'] ?? 'Not Set'); ?></p>
-        <button onclick="location.href='edit_profile.php'">Edit Profile</button>
+        <button style="color: white; background-color: #493628; font-weight: bold; padding: 10px 20px; border-radius: 5px;" onclick="location.href='edit_profile.php'">Edit Profile</button>
     </div>
 </body>
 <footer>

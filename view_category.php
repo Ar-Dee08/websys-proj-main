@@ -25,16 +25,22 @@ if (!$result) {
     <title>View Categories</title>
     <link rel="icon" href="images/img-003.ico" type="image/x-icon">
     <link href="styles.css" rel="stylesheet">
+    <style>
+        .category-title {
+            font-weight: bold;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
     <div class="container-1">
-    <button onclick="window.history.back()">Back to Previous Page</button>
-    <h2>Categories List</h2>
+    <button onclick="window.history.back()" style="color: white; background-color: #493628; font-weight: bold; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Back to Previous Page</button><br>
+    <h2><strong>Categories List</strong></h2>
         <?php if (mysqli_num_rows($result) > 0) : ?>
             <ul>
                 <?php while ($category = mysqli_fetch_assoc($result)) : ?>
                     <li>
-                        <h3><?php echo $category['category_name']; ?></h3>
+                        <h3 class="category-title"><?php echo $category['category_name']; ?></h3>
                         <p><?php echo $category['category_description']; ?></p>
                         <a href="edit_category.php?id=<?php echo $category['category_id']; ?>">Edit</a>
                         <a href="delete_category.php?id=<?php echo $category['category_id']; ?>">Delete</a>
@@ -45,7 +51,7 @@ if (!$result) {
         <?php else: ?>
             <p>No categories added yet.</p>
         <?php endif; ?>
-        <a href="edit_category.php">Add New Category</a>
+        <a href="edit_category.php" style="color: white; background-color: #493628; font-weight: bold; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Add New Category</a>
     </div>
 </body>
 <footer>

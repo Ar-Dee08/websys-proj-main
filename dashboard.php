@@ -32,7 +32,7 @@ $username = $_SESSION['username'];
 
     <div class="container-1">
         <div class="content">
-            <h1>Hi there, <?php echo htmlspecialchars($username); ?>!</h1>
+            <h1>Hi there, <strong><?php echo '<b>' . htmlspecialchars($username) . '</b>'; ?></strong>!</h1>
             <h3 style="color: #636363;">What would you like to do today?</h3>
             <div class="form-con">
     <ul class="form-list">

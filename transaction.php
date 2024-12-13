@@ -38,7 +38,7 @@ if (!$result) {
 </head>
 <body>
     <div class="container-1">
-        <h2>Transaction Records</h2>
+        <h2><strong>Transaction Records</strong></h2>
         <?php if (mysqli_num_rows($result) > 0): ?>
             <table border="1">
                 <thead>

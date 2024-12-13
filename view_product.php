@@ -25,8 +25,8 @@ if (!$result) {
 </head>
 <body>
     <div class="container-1">
-        <button onclick="window.history.back()">Back to Previous Page</button>
-        <h2>Active Products List</h2>
+        <button onclick="window.history.back()" style="color: white; background-color: #493628; font-weight: bold; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Back to Previous Page</button><br>
+        <h2><strong>Active Products List</strong></h2><br>
         <?php if (mysqli_num_rows($result) > 0) : ?>
             <ul>
                 <?php while ($product = mysqli_fetch_assoc($result)) : ?>
@@ -56,7 +56,7 @@ if (!$result) {
         <?php else: ?>
             <p>No active products available.</p>
         <?php endif; ?>
-        <a href="removed_product.php">View Removed Products</a>
+        <a href="removed_product.php" style="color: white; background-color: #493628; font-weight: bold; padding: 10px 20px; border-radius: 5px; text-decoration: none;">View Removed Products</a>
     </div>
 </body>
 <footer>

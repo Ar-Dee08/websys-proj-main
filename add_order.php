@@ -49,7 +49,7 @@ $product_result = mysqli_query($conn, $product_query);
 </head>
 <body>
     <div class="container-1">
-        <button onclick="window.history.back()">Back to Previous Page</button>
+        <button onclick="window.history.back()" style="color: white; background-color: #493628; font-weight: bold; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Back to Previous Page</button><br>
         <h2>Product List</h2>
         <form method="POST">
             <?php if (mysqli_num_rows($product_result) > 0): ?>

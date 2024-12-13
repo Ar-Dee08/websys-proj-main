@@ -42,7 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_admin'])) {
 </head>
 <body>
     <div class="container-1">
-        <h1>Add New Admin</h1>
+    <button onclick="window.history.back()" style="color: white; background-color: #493628; font-weight: bold; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Back to Previous Page</button><br>
+        <h1 style="margin-bottom: 10px;"><strong>Add New Admin</strong></h1>
         <form action="add_admin.php" method="POST">
             <input type="text" name="username" placeholder="Username" required>
             <input type="email" name="email" placeholder="Email" required>
