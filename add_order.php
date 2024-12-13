@@ -13,22 +13,29 @@ if (!isset($_SESSION['cart'])) {
 
 // Handle adding products to the cart
 if (isset($_POST['add_to_cart'])) {
-    $product_id = $_POST['product_id'];
-    $quantity = $_POST['quantity'];
+    // Check if any products were selected
+    if (isset($_POST['product_id']) && !empty($_POST['product_id'])) {
+        // Loop through the selected products and add them to the cart
+        foreach ($_POST['product_id'] as $index => $product_id) {
+            $quantity = $_POST['quantity'][$index];
 
-    // Check if the product is already in the cart
-    if (isset($_SESSION['cart'][$product_id])) {
-        $_SESSION['cart'][$product_id] += $quantity;
+            // Check if the product is already in the cart
+            if (isset($_SESSION['cart'][$product_id])) {
+                $_SESSION['cart'][$product_id] += $quantity; // Update quantity if product exists
+            } else {
+                $_SESSION['cart'][$product_id] = $quantity; // Add new product to cart
+            }
+        }
+
+        // Redirect to the cart page after adding products
+        header('Location: cart.php');
+        exit(); // Ensure no further code is executed after the redirect
     } else {
-        $_SESSION['cart'][$product_id] = $quantity;
+        echo "<p>No products selected to add to the cart.</p>";
     }
-
-    // Redirect to cart
-    header('Location: cart.php');
-    exit();
 }
 
-// Fetch products
+// Fetch products from the database
 $product_query = "SELECT * FROM products";
 $product_result = mysqli_query($conn, $product_query);
 ?>
@@ -42,24 +49,25 @@ $product_result = mysqli_query($conn, $product_query);
 </head>
 <body>
     <h2>Product List</h2>
-    <?php if (mysqli_num_rows($product_result) > 0): ?>
-        <ul>
-            <?php while ($product = mysqli_fetch_assoc($product_result)): ?>
-                <li>
-                    <h3><?php echo $product['product_name']; ?></h3>
-                    <p><?php echo $product['product_description']; ?></p>
-                    <p><strong>Price:</strong> ₱<?php echo number_format($product['product_price'], 2); ?></p>
-                    <form method="POST">
-                        <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
-                        <input type="number" name="quantity" value="1" min="1" required>
-                        <button type="submit" name="add_to_cart">Add to Cart</button>
-                    </form>
-                </li>
-            <?php endwhile; ?>
-        </ul>
-    <?php else: ?>
-        <p>No products available.</p>
-    <?php endif; ?>
+    <form method="POST">
+        <?php if (mysqli_num_rows($product_result) > 0): ?>
+            <ul>
+                <?php while ($product = mysqli_fetch_assoc($product_result)): ?>
+                    <li>
+                        <input type="checkbox" name="product_id[]" value="<?php echo $product['id']; ?>" id="product_<?php echo $product['id']; ?>">
+                        <label for="product_<?php echo $product['id']; ?>"><?php echo $product['product_name']; ?></label><br>
+                        <p><?php echo $product['product_description']; ?></p>
+                        <p><strong>Price:</strong> ₱<?php echo number_format($product['product_price'], 2); ?></p>
+                        <label for="quantity_<?php echo $product['id']; ?>">Quantity:</label>
+                        <input type="number" name="quantity[]" id="quantity_<?php echo $product['id']; ?>" min="1" value="1" required><br><br>
+                    </li>
+                <?php endwhile; ?>
+            </ul>
+            <button type="submit" name="add_to_cart">Add to Cart</button>
+        <?php else: ?>
+            <p>No products available.</p>
+        <?php endif; ?>
+    </form>
 </body>
 <?php include 'includes/footer.php'; ?>
 </html>
