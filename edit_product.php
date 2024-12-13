@@ -35,15 +35,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $status = mysqli_real_escape_string($conn, $_POST['status']);
 
     // Handle image upload
-    $img = $product['img']; // Default to existing image
-    if (isset($_FILES['img']) && $_FILES['img']['error'] == UPLOAD_ERR_OK) {
-        $img = file_get_contents($_FILES['img']['tmp_name']);
+    $prod_img = $product['prod_img']; // Default to existing image
+    if (isset($_FILES['prod_img']) && $_FILES['prod_img']['error'] == UPLOAD_ERR_OK) {
+        $prod_img = file_get_contents($_FILES['prod_img']['tmp_name']);
     }
 
     // Update the product in the database
-    $update_query = "UPDATE products SET product_name='$product_name', product_description='$product_description', product_price='$product_price', category_id='$category_id', status='$status', img=? WHERE id='$id'";
+    $update_query = "UPDATE products SET product_name='$product_name', product_description='$product_description', product_price='$product_price', category_id='$category_id', status='$status', prod_img=? WHERE id='$id'";
     $stmt = mysqli_prepare($conn, $update_query);
-    mysqli_stmt_bind_param($stmt, "b", $img);
+    mysqli_stmt_bind_param($stmt, "b", $prod_img);
     if (mysqli_stmt_execute($stmt)) {
         header("Location: view_product.php");
         exit;
@@ -92,10 +92,10 @@ $category_result = mysqli_query($conn, $category_query);
                 <option value="Removed" <?php if ($product['status'] == 'Removed') echo 'selected'; ?>>Removed</option>
             </select><br>
 
-            <label for="img">Product Image:</label>
-            <input type="file" name="img" id="img" accept="image/*"><br>
-            <?php if (!empty($product['img'])): ?>
-                <img src="data:image/jpeg;base64,<?php echo base64_encode($product['img']); ?>" alt="Product Image" width="150"><br>
+            <label for="prod_img">Product Image:</label>
+            <input type="file" name="prod_img" id="prod_img" accept="image/*"><br>
+            <?php if (!empty($product['prod_img'])): ?>
+                <img src="data:image/jpeg;base64,<?php echo base64_encode($product['prod_img']); ?>" alt="Product Image" width="150"><br>
             <?php endif; ?>
 
             <input type="submit" value="Update Product">

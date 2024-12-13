@@ -1,4 +1,5 @@
 <?php
+
 // Include necessary files
 include('db/db_connection.php');
 

@@ -33,8 +33,7 @@ $username = $_SESSION['username'];
     <div class="container-1">
         <div class="content">
             <h1>Hi there, <?php echo htmlspecialchars($username); ?>!</h1>
-            <h2>Welcome to your dashboard.</h2>
-            <p>Lorem</p>
+            <h3 style="color: #636363;">What would you like to do today?</h3>
             <div class="form-con">
     <ul class="form-list">
         <li class="form-it">
@@ -82,11 +81,6 @@ $username = $_SESSION['username'];
         <li class="form-it">
             <a class="form-lin" href="cart.php">
                 <i class="fa-solid fa-shopping-cart"></i> Cart
-            </a>
-        </li>
-        <li class="form-it">
-            <a class="form-lin" href="signout.php">
-                <i class="fa-solid fa-right-from-bracket"></i> Sign Out
             </a>
         </li>
     </ul>

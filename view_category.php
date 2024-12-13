@@ -39,6 +39,7 @@ if (!$result) {
                         <a href="edit_category.php?id=<?php echo $category['category_id']; ?>">Edit</a>
                         <a href="delete_category.php?id=<?php echo $category['category_id']; ?>">Delete</a>
                     </li>
+                    <hr>
                 <?php endwhile; ?>
             </ul>
         <?php else: ?>

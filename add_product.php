@@ -24,9 +24,16 @@ if (isset($_POST['submit'])) {
     $category_id = $_POST['category_id'];
     $status = $_POST['status'];  // Get product status
 
+    // Handle the uploaded image
+    $prod_img = null;
+    if (isset($_FILES['prod_img']) && $_FILES['prod_img']['error'] == 0) {
+        // Read the image content and store it as BLOB
+        $prod_img = file_get_contents($_FILES['prod_img']['tmp_name']);
+    }
+
     // Prepare statement to insert product into database
-    $stmt = $conn->prepare("INSERT INTO products (product_name, product_description, product_price, category_id, status) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssdii", $product_name, $product_description, $product_price, $category_id, $status); // Add status to the bind parameters
+    $stmt = $conn->prepare("INSERT INTO products (product_name, product_description, product_price, category_id, status, prod_img) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssdiss", $product_name, $product_description, $product_price, $category_id, $status, $prod_img); // Add prod_img to bind parameters
 
     // Execute the query
     if ($stmt->execute()) {
@@ -53,7 +60,7 @@ if (isset($_POST['submit'])) {
     <div class="container-1">
         <button onclick="window.history.back()">Back to Previous Page</button>
         <h2>Add a New Product</h2>
-        <form action="add_product.php" method="POST">
+        <form action="add_product.php" method="POST" enctype="multipart/form-data">
             <label for="product_name">Product Name:</label><br>
             <input type="text" name="product_name" id="product_name" required><br><br>
 
@@ -76,6 +83,9 @@ if (isset($_POST['submit'])) {
                 <option value="Active">Active</option>
                 <option value="Removed">Removed</option>
             </select><br><br>
+
+            <label for="prod_img">Product Image:</label><br>
+            <input type="file" name="prod_img" id="prod_img"><br><br>
 
             <input type="submit" name="submit" value="Add Product">
         </form>

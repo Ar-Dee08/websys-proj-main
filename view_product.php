@@ -31,15 +31,26 @@ if (!$result) {
             <ul>
                 <?php while ($product = mysqli_fetch_assoc($result)) : ?>
                     <li>
-                        <!-- Display the image directly -->
-                        <img src="<?php echo !empty($product['img']) ? htmlspecialchars($product['img']) : 'default_image.png'; ?>" 
-                             alt="Product Image" width="150">
-                             
+                        <?php
+                        // Check if product image exists in the database
+                        if (!empty($product['prod_img'])) {
+                            // Image stored as BLOB, so we need to convert it to base64
+                            $image_data = $product['prod_img'];
+                            $encoded_image = base64_encode($image_data);  // Convert BLOB to base64 string
+                            $image_src = 'data:image/jpeg;base64,' . $encoded_image; // Set the base64 image source
+                        } else {
+                            $image_src = 'default_image.png'; // Default image if no image is set
+                        }
+                        ?>
+                        <!-- Display the image using base64 encoded string -->
+                        <img src="<?php echo $image_src; ?>" alt="Product Image" width="150">
+
                         <h3><?php echo $product['product_name']; ?></h3>
                         <p><?php echo $product['product_description']; ?></p>
                         <p><strong>Price:</strong> ₱<?php echo number_format($product['product_price'], 2); ?></p>
                         <a href="edit_product.php?id=<?php echo $product['id']; ?>">Edit</a>
                     </li>
+                    <hr>
                 <?php endwhile; ?>
             </ul>
         <?php else: ?>
