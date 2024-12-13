@@ -26,6 +26,7 @@ if (!$result) {
 </head>
 <body>
     <div class="container-1">
+        <button onclick="window.history.back()">Back to Previous Page</button>
         <h2>Active Products List</h2>
         <?php if (mysqli_num_rows($result) > 0) : ?>
             <ul>

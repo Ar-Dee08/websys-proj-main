@@ -1,10 +1,13 @@
 <?php
-ob_start();
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
+ob_start(); // Start output buffering
+ini_set('display_errors', 1); 
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 include 'db/db_connection.php';
 include 'includes/header.php';

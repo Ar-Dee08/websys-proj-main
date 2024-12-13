@@ -48,26 +48,33 @@ $product_result = mysqli_query($conn, $product_query);
     <title>Add Order</title>
 </head>
 <body>
-    <h2>Product List</h2>
-    <form method="POST">
-        <?php if (mysqli_num_rows($product_result) > 0): ?>
-            <ul>
-                <?php while ($product = mysqli_fetch_assoc($product_result)): ?>
-                    <li>
-                        <input type="checkbox" name="product_id[]" value="<?php echo $product['id']; ?>" id="product_<?php echo $product['id']; ?>">
-                        <label for="product_<?php echo $product['id']; ?>"><?php echo $product['product_name']; ?></label><br>
-                        <p><?php echo $product['product_description']; ?></p>
-                        <p><strong>Price:</strong> ₱<?php echo number_format($product['product_price'], 2); ?></p>
-                        <label for="quantity_<?php echo $product['id']; ?>">Quantity:</label>
-                        <input type="number" name="quantity[]" id="quantity_<?php echo $product['id']; ?>" min="1" value="1" required><br><br>
-                    </li>
-                <?php endwhile; ?>
-            </ul>
-            <button type="submit" name="add_to_cart">Add to Cart</button>
-        <?php else: ?>
-            <p>No products available.</p>
-        <?php endif; ?>
-    </form>
+    <div class="container-1">
+        <button onclick="window.history.back()">Back to Previous Page</button>
+        <h2>Product List</h2>
+        <form method="POST">
+            <?php if (mysqli_num_rows($product_result) > 0): ?>
+                <ul>
+                    <?php while ($product = mysqli_fetch_assoc($product_result)): ?>
+                        <li>
+                            <input type="checkbox" name="product_id[]" value="<?php echo $product['id']; ?>" id="product_<?php echo $product['id']; ?>">
+                            <label for="product_<?php echo $product['id']; ?>"><?php echo $product['product_name']; ?></label><br>
+                            <p><?php echo $product['product_description']; ?></p>
+                            <p><strong>Price:</strong> ₱<?php echo number_format($product['product_price'], 2); ?></p>
+                            <label for="quantity_<?php echo $product['id']; ?>">Quantity:</label>
+                            <input type="number" name="quantity[]" id="quantity_<?php echo $product['id']; ?>" min="1" value="1" required><br><br>
+                        </li>
+                    <?php endwhile; ?>
+                </ul>
+                <button type="submit" name="add_to_cart">Add to Cart</button>
+            <?php else: ?>
+                <p>No products available.</p>
+            <?php endif; ?>
+        </form>
+    </div>
 </body>
-<?php include 'includes/footer.php'; ?>
+<footer>
+    <?php 
+        include 'includes/footer.php'; 
+    ?>
+</footer> 
 </html>

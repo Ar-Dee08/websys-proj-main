@@ -51,6 +51,7 @@ if (isset($_POST['submit'])) {
 </head>
 <body>
     <div class="container-1">
+        <button onclick="window.history.back()">Back to Previous Page</button>
         <h2>Add a New Product</h2>
         <form action="add_product.php" method="POST">
             <label for="product_name">Product Name:</label><br>

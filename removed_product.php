@@ -27,7 +27,6 @@ if (!$result) {
 <body>
     <div class="container-1">
         <h2>Removed Products List</h2>
-        
         <?php if (mysqli_num_rows($result) > 0) : ?>
             <ul>
                 <?php while ($product = mysqli_fetch_assoc($result)) : ?>

@@ -32,13 +32,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Add Customer</title>
 </head>
 <body>
-    <h2>Add Customer</h2>
-    <form action="" method="POST">
-        <label for="customer_name">Customer Name:</label><br>
-        <input type="text" id="customer_name" name="customer_name" placeholder="Enter customer name (optional)">
-        <br><br>
-        <button type="submit">Add Customer</button>
-    </form>
+    <div class="container-1">
+        <h2>Add Customer</h2>
+        <form action="" method="POST">
+            <label for="customer_name">Customer Name:</label><br>
+            <input type="text" id="customer_name" name="customer_name" placeholder="Enter customer name (optional)">
+            <br><br>
+            <button type="submit">Add Customer</button>
+        </form>
+    </div>
 </body>
-<?php include 'includes/footer.php'; ?>
+<footer>
+    <?php 
+        include 'includes/footer.php'; 
+    ?>
+</footer> 
 </html>

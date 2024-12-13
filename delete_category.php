@@ -1,5 +1,8 @@
 <?php
-// Include necessary files
+ob_start(); // Start output buffering
+ini_set('display_errors', 1); 
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 include('db/db_connection.php');
 
 // Check if category ID is provided and user confirmed the deletion

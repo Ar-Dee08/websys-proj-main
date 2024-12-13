@@ -1,5 +1,8 @@
 <?php
-// Include necessary files
+ob_start(); // Start output buffering
+ini_set('display_errors', 1); 
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 include 'includes/header.php';
 include('db/db_connection.php');
 
@@ -22,36 +25,42 @@ if (!$result) {
     <title>Customers</title>
 </head>
 <body>
-    <h2>Customer Records</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Customer ID</th>
-                <th>Customer Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (mysqli_num_rows($result) > 0) : ?>
-                <?php while ($customer = mysqli_fetch_assoc($result)) : ?>
-                    <tr>
-                        <td><?php echo $customer['customer_id']; ?></td>
-                        <td><?php echo !empty($customer['customer_name']) ? htmlspecialchars($customer['customer_name']) : 'N/A'; ?></td>
-                        <td>
-                            <a href="edit_customer.php?id=<?php echo $customer['customer_id']; ?>">Edit</a>
-                            <a href="delete_customer.php?id=<?php echo $customer['customer_id']; ?>" onclick="return confirm('Are you sure you want to delete this customer?');">Delete</a>
-                        </td>
-                    </tr>
-                <?php endwhile; ?>
-            <?php else: ?>
+    <div class="container-1">
+        <h2>Customer Records</h2>
+        <table border="1">
+            <thead>
                 <tr>
-                    <td colspan="3">No customers found.</td>
+                    <th>Customer ID</th>
+                    <th>Customer Name</th>
+                    <th>Actions</th>
                 </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-    <br>
-    <a href="add_customer.php">Add New Customer</a>
+            </thead>
+            <tbody>
+                <?php if (mysqli_num_rows($result) > 0) : ?>
+                    <?php while ($customer = mysqli_fetch_assoc($result)) : ?>
+                        <tr>
+                            <td><?php echo $customer['customer_id']; ?></td>
+                            <td><?php echo !empty($customer['customer_name']) ? htmlspecialchars($customer['customer_name']) : 'N/A'; ?></td>
+                            <td>
+                                <a href="edit_customer.php?id=<?php echo $customer['customer_id']; ?>">Edit</a>
+                                <a href="delete_customer.php?id=<?php echo $customer['customer_id']; ?>" onclick="return confirm('Are you sure you want to delete this customer?');">Delete</a>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="3">No customers found.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+        <br>
+        <a href="add_customer.php">Add New Customer</a>
+    </div>
 </body>
-<?php include 'includes/footer.php'; ?>
+<footer>
+    <?php 
+        include 'includes/footer.php'; 
+    ?>
+</footer> 
 </html>
