@@ -42,3 +42,7 @@ if (!isset($_SESSION['user_id'])) {
     ?>
 </footer> 
 </html>
+
+<?php
+$conn->close();
+?>
