@@ -240,3 +240,68 @@ form .small-text {
     color: #645454;
     margin-top: 10px;
 }
+
+.form-con {
+    background-color: #E4E0E1;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.form-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+}
+
+.form-it {
+    margin: 0;
+}
+
+.form-lin {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    display: block;
+}
+
+.form-lin:hover {
+    background-color: #A39090;
+    color: #fff;
+}
+
+.form-lin i {
+    margin-right: 5px;
+}
+/* Sub-list styling */
+.sub-list {
+    list-style: none;
+    padding-left: 20px;
+    display: none; /* Hidden by default */
+}
+
+.form-it .collapsible::after {
+    content: "▼"; /* Down arrow indicator */
+    font-size: 12px;
+    margin-left: 10px;
+    transition: transform 0.3s;
+}
+
+.form-it .collapsible.active::after {
+    transform: rotate(-180deg); /* Flip arrow */
+}
+
+/* Show sub-list when active */
+.form-it .collapsible.active + .sub-list {
+    display: block;
+}

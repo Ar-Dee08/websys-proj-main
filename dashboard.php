@@ -35,8 +35,68 @@ $username = $_SESSION['username'];
             <h1>Hi there, <?php echo htmlspecialchars($username); ?>!</h1>
             <h2>Welcome to your dashboard.</h2>
             <p>This is your home page where you can navigate through the system.</p>
-        </div>
+            <div class="form-con">
+    <ul class="form-list">
+        <li class="form-it">
+            <a class="form-lin" href="dashboard.php">
+                <i class="fa-solid fa-house"></i> Home
+            </a>
+        </li>
+        <li class="form-it">
+            <a class="form-lin collapsible" href="#">
+                <i class="fa-solid fa-box"></i> Products
+            </a>
+            <ul class="form-list sub-list">
+                <li class="form-it">
+                    <a class="form-lin" href="view_category.php">
+                        <i class="fa-solid fa-tags"></i> Category
+                    </a>
+                </li>
+                <li class="form-it">
+                    <a class="form-lin" href="add_product.php">
+                        <i class="fa-solid fa-plus"></i> Add Products
+                    </a>
+                </li>
+                <li class="form-it">
+                    <a class="form-lin" href="view_product.php">
+                        <i class="fa-solid fa-images"></i> Product Gallery
+                    </a>
+                </li>
+                <li class="form-it">
+                    <a class="form-lin" href="add_order.php">
+                        <i class="fa-solid fa-cart-plus"></i> Add New Order
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="form-it">
+            <a class="form-lin" href="view_admin.php">
+                <i class="fa-solid fa-user-shield"></i> Administrator
+            </a>
+        </li>
+        <li class="form-it">
+            <a class="form-lin" href="view_profile.php">
+                <i class="fa-solid fa-user"></i> Profile
+            </a>
+        </li>
+        <li class="form-it">
+            <a class="form-lin" href="cart.php">
+                <i class="fa-solid fa-shopping-cart"></i> Cart
+            </a>
+        </li>
+        <li class="form-it">
+            <a class="form-lin" href="signout.php">
+                <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+            </a>
+        </li>
+    </ul>
+</div>
+</div>
+</div>
     </div>
+
+    </div>
+    
 
 </body>
 <footer>
@@ -45,3 +105,16 @@ $username = $_SESSION['username'];
     ?>
 </footer> 
 </html>
+<script>
+    document.querySelectorAll('.collapsible').forEach(item => {
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
+            this.classList.toggle('active');
+            const subList = this.nextElementSibling;
+            if (subList) {
+                subList.style.display = subList.style.display === 'block' ? 'none' : 'block';
+            }
+        });
+    });
+</script>
+
