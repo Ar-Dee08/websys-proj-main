@@ -17,7 +17,13 @@ include('db/db_connection.php');
     <title>Transaction</title>
 </head>
 <body>
-    
+    <div class="container-1">
+
+    </div>
 </body>
-<?php include 'includes/footer.php'; ?>
+<footer>
+    <?php 
+        include 'includes/footer.php'; 
+    ?>
+</footer> 
 </html>

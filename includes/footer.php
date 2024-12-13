@@ -37,7 +37,7 @@
         <a class="nav-link" href="cart.php">Cart</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="admins.php">Administrator</a>
+        <a class="nav-link" href="view_admin.php">Administrator</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="view_profile.php">Profile</a>
@@ -51,6 +51,3 @@
     </div>
   </div>
 </footer>
-
-<!-- Footer Internal Styles -->
-

@@ -30,7 +30,7 @@
                         <a class="nav-link" href="products.php">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="admins.php">Administrator</a>
+                        <a class="nav-link" href="view_admin.php">Administrator</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="view_profile.php">Profile</a>
@@ -65,7 +65,7 @@
                     <a class="nav-link" href="products.php">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admins.php">Administrator</a>
+                    <a class="nav-link" href="view_admin.php">Administrator</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="profile.php">Profile</a>

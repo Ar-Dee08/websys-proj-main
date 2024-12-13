@@ -101,26 +101,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Edit Profile</title>
 </head>
 <body>
+    <div class="container-1">
     <h1>Edit Profile</h1>
-    <form method="POST" action="">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="username" value="<?php echo htmlspecialchars($row['username']); ?>" required><br>
+        <form method="POST" action="">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="username" value="<?php echo htmlspecialchars($row['username']); ?>" required><br>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" required><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" required><br>
 
-        <label for="birthdate">Birthdate:</label>
-        <input type="date" id="birthdate" name="birthdate" value="<?php echo htmlspecialchars($row['birthdate']); ?>"><br>
+            <label for="birthdate">Birthdate:</label>
+            <input type="date" id="birthdate" name="birthdate" value="<?php echo htmlspecialchars($row['birthdate']); ?>"><br>
 
-        <label for="sex">Sex:</label>
-        <select id="sex" name="sex" required>
-            <option value="" disabled>Select</option>
-            <option value="Male" <?php echo ($row['sex'] === 'Male') ? 'selected' : ''; ?>>Male</option>
-            <option value="Female" <?php echo ($row['sex'] === 'Female') ? 'selected' : ''; ?>>Female</option>
-        </select><br>
-
-        <button type="submit">Save Changes</button>
-    </form>
+            <label for="sex">Sex:</label>
+            <select id="sex" name="sex" required>
+                <option value="" disabled>Select</option>
+                <option value="Male" <?php echo ($row['sex'] === 'Male') ? 'selected' : ''; ?>>Male</option>
+                <option value="Female" <?php echo ($row['sex'] === 'Female') ? 'selected' : ''; ?>>Female</option>
+            </select><br>
+            
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
 </body>
-<?php include 'includes/footer.php'; ?>
+<footer>
+    <?php 
+        include 'includes/footer.php'; 
+    ?>
+</footer> 
 </html>

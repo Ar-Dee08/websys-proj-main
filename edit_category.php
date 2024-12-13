@@ -47,17 +47,22 @@ if (isset($_POST['submit'])) {
     <title>Edit Category</title>
 </head>
 <body>
+    <div class="container-1">
+        <form action="" method="post">
+            <label for="category_name">Category Name:</label>
+            <input type="text" id="category_name" name="category_name" value="<?php echo (isset($category)) ? $category['category_name'] : ''; ?>">
+            <br><br>
+            <label for="category_description">Category Description:</label>
+            <textarea id="category_description" name="category_description"><?php echo (isset($category)) ? $category['category_description'] : ''; ?></textarea>
+            <br><br>
+            <input type="submit" name="submit" value="<?php echo (isset($_GET['id'])) ? 'Update' : 'Add'; ?>">
+        </form>
+    </div>
     <h2><?php echo (isset($_GET['id'])) ? 'Edit Category' : 'Add New Category'; ?></h2>
-    
-    <form action="" method="post">
-        <label for="category_name">Category Name:</label>
-        <input type="text" id="category_name" name="category_name" value="<?php echo (isset($category)) ? $category['category_name'] : ''; ?>">
-        <br><br>
-        <label for="category_description">Category Description:</label>
-        <textarea id="category_description" name="category_description"><?php echo (isset($category)) ? $category['category_description'] : ''; ?></textarea>
-        <br><br>
-        <input type="submit" name="submit" value="<?php echo (isset($_GET['id'])) ? 'Update' : 'Add'; ?>">
-    </form>
 </body>
-<?php include 'includes/footer.php'; ?>
+<footer>
+    <?php 
+        include 'includes/footer.php'; 
+    ?>
+</footer> 
 </html>

@@ -5,13 +5,31 @@
     padding: 0;
     font-weight: bold; /* Added to make all text bold */
 }
+
 body {
-    background-image: url('images/image-004.png');
+    background-image: url('images/img-004.png');
     background-size: 100px;
-    background: linear-gradient(#ab886de2, #d6c0b3b3), url('images/image-004.png');
+    background: linear-gradient(#ab886de2, #d6c0b3b3), url('images/img-004.png');
     background-attachment: fixed;
-    font-weight: bold; /* Added to make body text bold */
+    font-weight: bold;
 }
+
+.container-1 {
+    margin: auto;
+    background-color: #d0cab6;
+    padding: 60px;
+    border-radius: 12px;
+    max-width: 80%;
+    margin: 80px auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    font-family: 'Inter', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 /* Navbar Styles */
 .custom-navbar {
     background-color: #E4E0E1; 
@@ -165,6 +183,7 @@ html, body {
 .footer .row-c {
     margin-top: 10px;
 }
+
 /* FORM FOR ADMIN */
 form {
     display: flex;
@@ -195,11 +214,13 @@ form input[type="password"]:focus {
     border-color: #A5A5A5;
     box-shadow: 0 0 5px rgba(100, 84, 84, 0.2);
 }
+
 /* YOU CAN CHANGE THE BUTTON FREELY */
 form button {
     width: 100%; /* Make button full-width */
-    padding: 16px 0; /* Increase padding for a bigger button */
+    padding: 12px 0; /* Increase padding for a bigger button */
     font-size: 1.25rem; /* Increase font size */
+    margin: 10px;
     background-color: #645454;
     color: #E1E1E1;
     border: none;
@@ -219,4 +240,3 @@ form .small-text {
     color: #645454;
     margin-top: 10px;
 }
-

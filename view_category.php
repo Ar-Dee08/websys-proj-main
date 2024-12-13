@@ -25,23 +25,28 @@ if (!$result) {
     <title>View Categories</title>
 </head>
 <body>
+    <div class="container-1">
+        <?php if (mysqli_num_rows($result) > 0) : ?>
+            <ul>
+                <?php while ($category = mysqli_fetch_assoc($result)) : ?>
+                    <li>
+                        <h3><?php echo $category['category_name']; ?></h3>
+                        <p><?php echo $category['category_description']; ?></p>
+                        <a href="edit_category.php?id=<?php echo $category['category_id']; ?>">Edit</a>
+                        <a href="delete_category.php?id=<?php echo $category['category_id']; ?>">Delete</a>
+                    </li>
+                <?php endwhile; ?>
+            </ul>
+        <?php else: ?>
+            <p>No categories added yet.</p>
+        <?php endif; ?>
+        <a href="edit_category.php">Add New Category</a>
+    </div>
     <h2>Categories List</h2>
-    
-    <?php if (mysqli_num_rows($result) > 0) : ?>
-        <ul>
-            <?php while ($category = mysqli_fetch_assoc($result)) : ?>
-                <li>
-                    <h3><?php echo $category['category_name']; ?></h3>
-                    <p><?php echo $category['category_description']; ?></p>
-                    <a href="edit_category.php?id=<?php echo $category['category_id']; ?>">Edit</a>
-                    <a href="delete_category.php?id=<?php echo $category['category_id']; ?>">Delete</a>
-                </li>
-            <?php endwhile; ?>
-        </ul>
-    <?php else: ?>
-        <p>No categories added yet.</p>
-    <?php endif; ?>
-    <a href="edit_category.php">Add New Category</a>
 </body>
-<?php include 'includes/footer.php'; ?>
+<footer>
+    <?php 
+        include 'includes/footer.php'; 
+    ?>
+</footer> 
 </html>

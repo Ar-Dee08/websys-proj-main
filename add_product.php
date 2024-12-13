@@ -45,27 +45,33 @@ if (isset($_POST['submit'])) {
     <title>Edit Profile - Add Product</title>
 </head>
 <body>
-    <h2>Add a New Product</h2>
-    <form action="add_product.php" method="POST">
-        <label for="product_name">Product Name:</label><br>
-        <input type="text" name="product_name" id="product_name" required><br><br>
+    <div class="container-1">
+        <h2>Add a New Product</h2>
+        <form action="add_product.php" method="POST">
+            <label for="product_name">Product Name:</label><br>
+            <input type="text" name="product_name" id="product_name" required><br><br>
 
-        <label for="product_description">Product Description:</label><br>
-        <textarea name="product_description" id="product_description" required></textarea><br><br>
+            <label for="product_description">Product Description:</label><br>
+            <textarea name="product_description" id="product_description" required></textarea><br><br>
 
-        <label for="product_price">Product Price:</label><br>
-        <input type="number" name="product_price" id="product_price" required><br><br>
+            <label for="product_price">Product Price:</label><br>
+            <input type="number" name="product_price" id="product_price" required><br><br>
 
-        <label for="category_id">Category:</label><br>
-        <select name="category_id" id="category_id" required>
-            <option value="">Select a category</option>
-            <?php while ($category = mysqli_fetch_assoc($category_result)) : ?>
-                <option value="<?php echo $category['category_id']; ?>"><?php echo $category['category_name']; ?></option>
-            <?php endwhile; ?>
-        </select><br><br>
+            <label for="category_id">Category:</label><br>
+            <select name="category_id" id="category_id" required>
+                <option value="">Select a category</option>
+                <?php while ($category = mysqli_fetch_assoc($category_result)) : ?>
+                    <option value="<?php echo $category['category_id']; ?>"><?php echo $category['category_name']; ?></option>
+                <?php endwhile; ?>
+            </select><br><br>
 
-        <input type="submit" name="submit" value="Add Product">
-    </form>
+            <input type="submit" name="submit" value="Add Product">
+        </form>
+    </div>
 </body>
-<?php include 'includes/footer.php'; ?>
+<footer>
+    <?php 
+        include 'includes/footer.php'; 
+    ?>
+</footer> 
 </html>

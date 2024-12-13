@@ -26,11 +26,18 @@ $username = $_SESSION['username'];
 <body>
     <?php include 'includes/header.php'; ?>
 
-    <div class="content" style="margin-left: 250px; margin-top: 60px; padding: 20px;">
-        <h1>Hi there, <?php echo htmlspecialchars($username); ?>!</h1>
-        <h2>Welcome to your dashboard.</h2>
-        <p>This is your home page where you can navigate through the system.</p>
+    <div class="container-1">
+        <div class="content">
+            <h1>Hi there, <?php echo htmlspecialchars($username); ?>!</h1>
+            <h2>Welcome to your dashboard.</h2>
+            <p>This is your home page where you can navigate through the system.</p>
+        </div>
     </div>
+
 </body>
-<?php include 'includes/footer.php'; ?>
+<footer>
+    <?php 
+        include 'includes/footer.php'; 
+    ?>
+</footer> 
 </html>
