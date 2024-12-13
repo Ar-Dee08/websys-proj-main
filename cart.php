@@ -27,7 +27,7 @@ if (isset($_POST['place_order'])) {
 
             // Insert each item into the order_details table
             foreach ($order_items as $product_id => $quantity) {
-                $product_query = "SELECT product_price FROM products WHERE id = $product_id";
+                $product_query = "SELECT product_name, product_price FROM products WHERE id = $product_id";
                 $product_result = mysqli_query($conn, $product_query);
                 $product = mysqli_fetch_assoc($product_result);
 
@@ -116,7 +116,11 @@ if (isset($_POST['place_order'])) {
         <?php else: ?>
             <p>Your cart is empty.</p>
         <?php endif; ?>
-
+        <!-- Add New Order Button -->
+        <h2>Add More Products to Your Cart</h2>
+        <a href="add_order.php">
+            <button>Add New Order</button>
+        </a>
         <h2>Place Order</h2>
         <form method="POST">
             <label for="customer_name">Customer Name:</label>

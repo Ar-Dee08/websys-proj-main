@@ -37,6 +37,9 @@ if (!isset($_SESSION['user_id'])) {
         <form action="view_product.php" method="get" style="display: inline-block; width: 500%;">
             <button type="submit" style="width: 100%;">Product Gallery</button>
         </form>
+        <form action="add_order.php" method="get" style="display: inline-block; width: 500%;">
+            <button onclick="window.location.href='add_order.php'">Add New Order</button>
+        </form>
         </div>
     </div>
 </body>

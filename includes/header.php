@@ -36,6 +36,9 @@
                         <a class="nav-link" href="view_admin.php">Administrator</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="customers.php">Customer</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="view_profile.php">Profile</a>
                     </li>
                     <li class="nav-item">
