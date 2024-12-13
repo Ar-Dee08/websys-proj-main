@@ -13,7 +13,15 @@
         <img src="" alt="">
     </div>
   <div class="footer" style="margin: 20px 0;">
-    
+  
+    <!-- Logo Row -->
+    <div class="row">
+      <div style="text-align: center;">
+        <img src="images/img-004.png" alt="Crumbs and Brew Logo" style="width: 100px; height: 100px; margin-bottom: 15px; filter: brightness(0) invert(1);"><br>
+        <h3 style="color: white;"><strong>Crumbs & Brew</strong></h3>
+        <h5 style="color: white;">A taste in every sip and bite.</h5><br>
+      </div>
+
     <!-- Icons Row -->
     <div class="row icons-row">
       <a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>
