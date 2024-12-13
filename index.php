@@ -1,3 +1,71 @@
+<?php
+session_start();
+include 'db/db_connection.php';
+
+$errorMessage = '';
+$successMessage = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+    if ($_POST['submit'] === 'Sign Up') {
+        // Handle Sign Up
+        $username = trim($_POST['username']);
+        $email = trim($_POST['email']);
+        $password = trim($_POST['password']);
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        if ($username && $email && $password) {
+            $stmt = $conn->prepare("INSERT INTO user_login (username, email, password) VALUES (?, ?, ?)");
+            $stmt->bind_param("sss", $username, $email, $hashedPassword);
+
+            try {
+                $stmt->execute();
+                $successMessage = 'Account successfully created! Please sign in.';
+            } catch (mysqli_sql_exception $e) {
+                if ($e->getCode() == 1062) {
+                    $errorMessage = 'The email is already taken. Please try again.';
+                } else {
+                    $errorMessage = 'An unexpected error occurred. Please try again.';
+                }
+            }
+
+            $stmt->close();
+        } else {
+            $errorMessage = 'Please fill in all fields.';
+        }
+    } elseif ($_POST['submit'] === 'Sign In') {
+        // Handle Sign In
+        $email = trim($_POST['email']);
+        $password = $_POST['password'];
+
+        $stmt = $conn->prepare("SELECT * FROM user_login WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            if (password_verify($password, $user['password'])) {
+                // Set session variables
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['username'] = $user['username'];
+
+                // Redirect to dashboard.php
+                header("Location: dashboard.php");
+                exit();
+            } else {
+                $errorMessage = 'Invalid password.';
+            }
+        } else {
+            $errorMessage = 'No user found with this email.';
+        }
+
+        $stmt->close();
+    }
+
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,43 +82,7 @@
         <form action="index.php" method="POST" id="signUpForm">
             <h1>Create Account</h1>
             <?php
-            error_reporting(E_ALL);
-            ini_set('display_errors', 1);
-
-            include 'db/db_connection.php';
-
-            $errorMessage = '';
-
-            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
-                $username = trim($_POST['username']);
-                $email = trim($_POST['email']);
-                $password = trim($_POST['password']);
-                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-                if ($username && $email && $password) {
-                    $stmt = $conn->prepare("INSERT INTO user_login (username, email, password) VALUES (?, ?, ?)");
-                    $stmt->bind_param("sss", $username, $email, $hashedPassword);
-
-                    try {
-                        $stmt->execute();
-                        header("Location: index.php?message=success");
-                        exit();
-                    } catch (mysqli_sql_exception $e) {
-                        if ($e->getCode() == 1062) {
-                            $errorMessage = 'The email is already taken. Please try again.';
-                        } else {
-                            $errorMessage = 'An unexpected error occurred. Please try again.';
-                        }
-                    }
-
-                    $stmt->close();
-                } else {
-                    $errorMessage = 'Please fill in all fields.';
-                }
-
-                $conn->close();
-            }
-            if (!empty($errorMessage)) {
+            if (!empty($errorMessage) && $_POST['submit'] === 'Sign Up') {
                 echo "<div class='error-message'>$errorMessage</div>";
                 echo "<script>document.getElementById('main').classList.add('right-panel-active');</script>";
             }
@@ -58,20 +90,23 @@
             <input type="text" name="username" placeholder="Name" required>
             <input type="email" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="Password" required>
-            <button type="submit" name="submit">Sign Up</button>
+            <button type="submit" name="submit" value="Sign Up">Sign Up</button>
         </form>
     </div>
     <div class="sign-in">
-        <form action="login.php" method="POST">
+        <form action="index.php" method="POST">
             <h1>Sign In</h1>
             <?php
-            if (isset($_GET['message']) && $_GET['message'] == 'success') {
-                echo '<div class="success-message">Account Successfully Created!</div>';
+            if (!empty($successMessage)) {
+                echo "<div class='success-message'>$successMessage</div>";
+            }
+            if (!empty($errorMessage) && $_POST['submit'] === 'Sign In') {
+                echo "<div class='error-message'>$errorMessage</div>";
             }
             ?>
             <input type="email" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="Password" required>
-            <button type="submit" name="submit">Sign In</button>
+            <button type="submit" name="submit" value="Sign In">Sign In</button>
         </form>
     </div>
     <div class="overlay-container">

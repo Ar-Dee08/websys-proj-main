@@ -120,9 +120,6 @@
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
-
 <!-- Additional JavaScript for Offcanvas functionality -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -132,3 +129,25 @@
         })
     });
 </script>
+
+<script>
+    // Select all collapsible buttons
+    const collapsibles = document.querySelectorAll('.collapsible');
+
+    collapsibles.forEach(button => {
+        button.addEventListener('click', function() {
+            // Toggle active state
+            this.classList.toggle('active');
+
+            // Show or hide the content
+            const content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    });
+</script>
+</body>
+</html>

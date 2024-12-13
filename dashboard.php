@@ -34,7 +34,7 @@ $username = $_SESSION['username'];
         <div class="content">
             <h1>Hi there, <?php echo htmlspecialchars($username); ?>!</h1>
             <h2>Welcome to your dashboard.</h2>
-            <p>This is your home page where you can navigate through the system.</p>
+            <p>Lorem</p>
             <div class="form-con">
     <ul class="form-list">
         <li class="form-it">
