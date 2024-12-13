@@ -118,6 +118,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <option value="" disabled>Select</option>
                 <option value="Male" <?php echo ($row['sex'] === 'Male') ? 'selected' : ''; ?>>Male</option>
                 <option value="Female" <?php echo ($row['sex'] === 'Female') ? 'selected' : ''; ?>>Female</option>
+                <option value="Prefer not to say" <?php echo ($row['sex'] === 'Prefer not to say') ? 'selected' : ''; ?>>
+        Prefer not to say (optional for privacy reasons)
+    </option>
             </select><br>
             
             <button type="submit">Save Changes</button>

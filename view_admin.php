@@ -48,6 +48,7 @@ if (!$result) {
                     <td>
                         <a href="edit_admin.php?id=<?= $row['id'] ?>">Edit</a>
                     </td>
+                    <td></td>
                 </tr>
             <?php endwhile; ?>
         </table>
